@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /mr-api/
+Disallow: /go-dl
+
+Sitemap: https://cubenorix.github.io/sitemap.xml
+Host: cubenorix.github.io

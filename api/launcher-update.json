@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "status": "draft",
+  "enabled": false,
+  "latest_version": null,
+  "release_date": null,
+  "download_url_windows": null,
+  "download_url_mac": null,
+  "download_url_linux": null,
+  "changelog": "Лаунчер ещё не опубликован. Установщик не должен предлагать загрузку, пока enabled=false.",
+  "downloads": {},
+  "security": {
+    "hash_algorithm": "sha256",
+    "signature_algorithm": "ed25519",
+    "public_key_id": null
+  },
+  "support_url": "https://t.me/CubexusSupportBot",
+  "support_email": "support@cubexus.net"
+}
