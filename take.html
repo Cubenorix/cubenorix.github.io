@@ -1,0 +1,165 @@
+<!doctype html>
+<!-- Cubexus; Copyright (C) 2025-2026 Cubexus Team; SPDX-License-Identifier: AGPL-3.0-or-later -->
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Безопасное сохранение файлов Cubexus с CDN источника.">
+  <title>Cubexus — сохранение</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: #161618; color: #f0f0f2; font-family: system-ui, sans-serif; padding: 28px 18px 48px; }
+    .box { max-width: 560px; margin: 0 auto; }
+    h1 { font-size: 22px; margin: 0 0 8px; }
+    p { color: #c4c4cc; line-height: 1.5; }
+    .name { font-family: ui-monospace, monospace; color: #ffb347; word-break: break-all; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+    a.btn, button.btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 46px; padding: 0 18px; border-radius: 100px;
+      font-weight: 800; text-decoration: none; border: 0; cursor: pointer;
+      font-family: inherit; font-size: 15px;
+    }
+    .pri { background: linear-gradient(135deg,#ffb347,#ff6b00 45%,#cc5500); color: #12080a; }
+    .ghost { background: #2a2a30; color: #eee; border: 1px solid rgba(255,255,255,.12); }
+    .warn { background: #2a1c10; border: 1px solid rgba(255,179,71,.35); border-radius: 16px; padding: 12px 14px; margin: 14px 0; font-size: 14px; }
+    .ok { color: #8ee0b0; }
+    .url { width: 100%; background: #1c1c20; color: #ffb347; border: 1px solid #333; border-radius: 12px; padding: 10px 12px; font: 13px ui-monospace, monospace; }
+    .saveas { display: flex; gap: 12px; align-items: center; background: #1c1c20; border: 1px solid #333; border-radius: 16px; padding: 12px; }
+    .saveas img { width: 88px; height: 88px; object-fit: contain; border-radius: 12px; background: #000; }
+    .muted { font-size: 13px; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Сохранение файла</h1>
+    <p class="name" id="nm">…</p>
+    <p id="st">Готовлю ссылки…</p>
+    <div class="warn" id="frame" hidden>
+      Ты в превью Arena — браузер режет автосохранение.
+      Открой Cubexus в обычной вкладке или правый клик по картинке ниже → «Сохранить ссылку как».
+      <input class="url" id="site" readonly style="margin-top:10px" value="">
+      <div class="row">
+        <button class="btn ghost" type="button" id="copy">Скопировать адрес сайта</button>
+        <a class="btn pri" id="open" href="/" target="_blank" rel="noopener">Открыть в новой вкладке</a>
+      </div>
+    </div>
+    <div class="row" id="links"></div>
+    <div class="saveas" id="pngbox" hidden>
+      <a id="pnga" href="/no-icon.png" download="mod.png"><img id="pngimg" alt="Cubexus" src="/no-icon.png"></a>
+      <div>
+        <b>Обход превью:</b> правый клик по картинке → «Сохранить ссылку как» / Save link as.
+        Потом переименуй .png в .zip — внутри тот же мод.
+      </div>
+    </div>
+    <p class="muted">.zip = те же байты, что .jar. .json/.txt — запасной формат. Проверка — крошечный файл.</p>
+    <div class="row">
+      <a class="btn ghost" href="/api/ok.json" download="cubexus-ok.json">Проверка .json</a>
+      <a class="btn ghost" href="/api/ok.txt" download="cubexus-ok.txt">Проверка .txt</a>
+    </div>
+  </div>
+  <script>
+    const q = new URLSearchParams(location.search)
+    const rawUrl = q.get('url') || ''
+    const rawName = (q.get('name') || 'mod.zip').replace(/[^\w.+\-]+/g, '_').slice(0, 120)
+    const framed = (() => { try { return window.top !== window.self } catch { return true } })()
+    const nm = document.getElementById('nm')
+    const st = document.getElementById('st')
+    const links = document.getElementById('links')
+    nm.textContent = rawName
+
+    function api(name, extra) {
+      const p = new URLSearchParams({ url: rawUrl, name })
+      Object.entries(extra || {}).forEach(([k, v]) => p.set(k, v))
+      return '/api/file?' + p.toString()
+    }
+    const zipName = /\.jar$/i.test(rawName) ? rawName.replace(/\.jar$/i, '.zip') : (/\.zip$/i.test(rawName) ? rawName : rawName + '.zip')
+    const jsonName = rawName.replace(/\.(jar|zip|png)$/i, '') + '.json'
+    const txtName = rawName.replace(/\.(jar|zip|png)$/i, '') + '.txt'
+    const pngName = rawName.replace(/\.(jar|zip|png)$/i, '') + '.png'
+    const zip = rawUrl ? api(zipName, { as: 'zip' }) : ''
+    const jar = rawUrl ? api(rawName, { as: 'bin' }) : ''
+    const js = rawUrl ? api(jsonName, { as: 'json', pack: '1' }) : ''
+    const txt = rawUrl ? api(txtName, { as: 'txt', pack: '1' }) : ''
+    const png = rawUrl ? api(pngName, { as: 'png' }) : ''
+
+    function add(href, label, cls, download) {
+      if (!href) return
+      const a = document.createElement('a')
+      a.className = 'btn ' + (cls || 'ghost')
+      a.href = href
+      a.textContent = label
+      if (download) a.setAttribute('download', download)
+      a.rel = 'noopener'
+      links.appendChild(a)
+    }
+    add(zip, 'Скачать .zip', 'pri', zipName)
+    add(jar, 'Скачать .jar', 'ghost', rawName)
+    add(js, 'Скачать .json', 'ghost', jsonName)
+    add(txt, 'Скачать .txt', 'ghost', txtName)
+    add(png, 'Скачать .png', 'ghost', pngName)
+
+    if (png) {
+      document.getElementById('pngbox').hidden = false
+      document.getElementById('pnga').href = png
+      document.getElementById('pnga').download = pngName
+      document.getElementById('pngimg').src = png
+    }
+
+    const site = location.origin + (rawUrl ? ('/take.html' + location.search) : '/')
+    document.getElementById('open').href = site
+    document.getElementById('site').value = location.origin
+    if (framed) {
+      document.getElementById('frame').hidden = false
+      st.textContent = 'Превью режет автосохранение. Жми кнопку, «сохранить ссылку как» или открой обычную вкладку.'
+    } else {
+      st.textContent = rawUrl ? 'Если браузер спросит — Сохранить.' : 'Нет ссылки на файл.'
+      if (zip) {
+        const a = document.createElement('a')
+        a.href = zip
+        a.download = zipName
+        a.rel = 'noopener'
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+      }
+    }
+
+    document.getElementById('copy').onclick = async () => {
+      try { await navigator.clipboard.writeText(location.origin) } catch {}
+      st.textContent = 'Адрес скопирован: ' + location.origin
+    }
+
+    async function savePicker(href, name) {
+      if (!href || !window.showSaveFilePicker) return false
+      try {
+        const handle = await window.showSaveFilePicker({ suggestedName: name, types: [{ description: 'File', accept: { 'application/octet-stream': ['.' + String(name).split('.').pop()] } }] })
+        const res = await fetch(href, { credentials: 'same-origin' })
+        if (!res.ok) return false
+        const buf = await res.arrayBuffer()
+        const w = await handle.createWritable()
+        await w.write(buf)
+        await w.close()
+        st.textContent = 'Записано на диск: ' + name
+        st.className = 'ok'
+        return true
+      } catch (e) {
+        if (e && e.name === 'AbortError') return true
+        return false
+      }
+    }
+
+    document.querySelectorAll('#links a').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        if (window.showSaveFilePicker) {
+          e.preventDefault()
+          savePicker(a.href, a.getAttribute('download') || rawName).then((ok) => {
+            if (!ok) location.assign(a.href)
+          })
+        }
+      })
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "status": "draft",
+  "launcher": [],
+  "modpacks": [],
+  "java": [],
+  "requirements": {
+    "required_fields": ["path", "size", "sha256", "license", "source"],
+    "launcher_signature": "ed25519",
+    "maximum_pages_file_bytes": 26214400
+  }
+}
