@@ -2,7 +2,16 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /mr-api/
+Disallow: /mr-cdn/
 Disallow: /go-dl
+Disallow: /take.html
+Disallow: /test
+Disallow: /debug
+Disallow: /tmp
+Disallow: /draft
+Disallow: /beta-test
+Disallow: /connection?test
+Disallow: /hash
 
 Sitemap: https://cubenorix.github.io/sitemap.xml
 Host: cubenorix.github.io

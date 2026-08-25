@@ -84,6 +84,22 @@
     const txt = rawUrl ? api(txtName, { as: 'txt', pack: '1' }) : ''
     const png = rawUrl ? api(pngName, { as: 'png' }) : ''
 
+    // Страница проекта источника (не прямая ссылка на файл), когда она выводима.
+    function sourcePage(u) {
+      try {
+        const url = new URL(u)
+        const h = url.hostname
+        let m
+        if (h === 'cdn.modrinth.com' || h === 'cdn-raw.modrinth.com') {
+          m = url.pathname.match(/^\/data\/([^/]+)/)
+          if (m) return 'https://modrinth.com/project/' + m[1]
+        }
+        if (h === 'hangarcdn.papermc.io' || h.endsWith('.hangarcdn.papermc.io')) return 'https://hangar.papermc.io/'
+        if (h === 'mediafilez.forgecdn.net' || h === 'media.forgecdn.net') return 'https://www.curseforge.com/minecraft/search'
+        return ''
+      } catch { return '' }
+    }
+
     function add(href, label, cls, download) {
       if (!href) return
       const a = document.createElement('a')
@@ -99,6 +115,16 @@
     add(js, 'Скачать .json', 'ghost', jsonName)
     add(txt, 'Скачать .txt', 'ghost', txtName)
     add(png, 'Скачать .png', 'ghost', pngName)
+    const srcPage = sourcePage(rawUrl)
+    if (srcPage) {
+      const a = document.createElement('a')
+      a.className = 'btn ghost'
+      a.href = srcPage
+      a.textContent = 'Страница источника'
+      a.target = '_blank'
+      a.rel = 'noopener noreferrer'
+      links.appendChild(a)
+    }
 
     if (png) {
       document.getElementById('pngbox').hidden = false
