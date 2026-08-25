@@ -7,4 +7,4 @@ Production assets must be stored in the private Cloudflare R2 bucket bound as
 LAUNCHER_ASSETS, scanned, hashed with SHA-256, licensed for redistribution and
 listed in /api/launcher-assets.json before an update manifest is enabled.
 
-Contact: support@cubexus.net
+Contact: https://t.me/Cubenorixsupportbot
