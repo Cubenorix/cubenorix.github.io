@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Лаунчер Cubenorixx — версии Minecraft в реальном времени</title>
+<meta name="description" content="Живая информация о версиях Minecraft для лаунчера Cubenorixx: релизы, снапшоты, прямые загрузки клиента и сервера, Java-требования и открытый API.">
+<meta name="theme-color" content="#ff7a1a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; margin: 0; }
+body { background: #0f0f11; color: #eee; font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; min-height: 100vh; }
+a { color: #ffad55; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 0 16px 64px; }
+header.top { display: flex; align-items: center; gap: 14px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 22px; flex-wrap: wrap; }
+header.top img { width: 42px; height: 42px; }
+.logo b { font-size: 1.25rem; letter-spacing: .3px; }
+.logo span { display: block; font-size: .74rem; color: #9a9aa3; }
+nav.head { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+nav.head a { padding: 7px 13px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); font-size: .84rem; color: #ddd; }
+nav.head a.on, nav.head a:hover { border-color: #ff7a1a; color: #ffad55; text-decoration: none; }
+h1 { font-size: 1.7rem; margin: 6px 0 4px; }
+.sub { color: #a5a5ae; font-size: .92rem; margin-bottom: 18px; }
+.live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; margin-right: 6px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } }
+.card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09); border-radius: 18px; padding: 20px; }
+.card h2 { font-size: 1.05rem; margin-bottom: 6px; }
+.card .meta { color: #9a9aa3; font-size: .8rem; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .72rem; border: 1px solid; vertical-align: middle; }
+.badge.release { color: #4ade80; border-color: rgba(74,222,128,.4); }
+.badge.snapshot { color: #fbbf24; border-color: rgba(251,191,36,.4); }
+.badge.old { color: #9a9aa3; border-color: rgba(255,255,255,.2); }
+.btn { display: inline-block; padding: 9px 18px; border-radius: 12px; border: 1px solid transparent; cursor: pointer; font-size: .88rem; font-weight: 600; background: linear-gradient(135deg,#FFB347,#FF6B00); color: #1a120a; }
+.btn:hover { filter: brightness(1.08); text-decoration: none; }
+.btn.ghost { background: transparent; border-color: rgba(255,255,255,.18); color: #ddd; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+input.field { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); color: #eee; border-radius: 12px; padding: 10px 14px; font-size: .92rem; width: 100%; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0; }
+.filters .f { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: none; color: #ccc; cursor: pointer; font-size: .82rem; }
+.filters .f.on { border-color: #ff7a1a; color: #ffad55; }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+th { text-align: left; color: #9a9aa3; font-weight: 500; font-size: .78rem; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.1); }
+td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,.05); vertical-align: top; }
+td .sha { font-family: ui-monospace, monospace; font-size: .72rem; color: #8a8a93; word-break: break-all; }
+.soon { border: 1px dashed rgba(255,255,255,.2); border-radius: 18px; padding: 20px; color: #a5a5ae; font-size: .9rem; }
+code, pre { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; }
+pre { background: rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px 14px; overflow-x: auto; font-size: .76rem; line-height: 1.55; color: #d7d7de; }
+.kv { color: #ffad55; }
+.note { font-size: .78rem; color: #8a8a93; margin-top: 8px; }
+footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.08); color: #8a8a93; font-size: .8rem; }
+.spinner { padding: 40px 0; text-align: center; color: #9a9aa3; }
+.err { color: #f87171; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <img src="/logo-512.png" alt="">
+    <div class="logo"><b>Cubenorixx Launcher</b><span>версии Minecraft в реальном времени · данные Mojang</span></div>
+    <nav class="head">
+      <a href="#/" data-r="home">Версии</a>
+      <a href="#/api" data-r="api">API</a>
+      <a href="/">← На сайт</a>
+    </nav>
+  </header>
+  <main id="app"><div class="spinner">Загружаем живые данные Mojang…</div></main>
+  <footer class="bot">
+    Cubenorixx — некоммерческий фан-проект. Minecraft — товарный знак Mojang Studios. Версии и файлы раздаёт официальный CDN Mojang (piston-meta / piston-data).<br>
+    Канал <a href="https://t.me/Cubenorix" rel="noopener">t.me/Cubenorix</a> · Поддержка <a href="https://t.me/Cubenorixsupportbot" rel="noopener">@Cubenorixsupportbot</a> · <a href="/official/">Официальные адреса</a>
+  </footer>
+</div>
+<script>
+(function () {
+  'use strict'
+  const MANIFEST_URL = 'https://piston-meta.mojang.com/mc/game/version_manifest_v2.json'
+  const FALLBACK = '/api/mc-versions.json'
+  const app = document.getElementById('app')
+  let MANIFEST = null
+  let fetchedAt = null
+  let filterType = 'all'
+  let filterQuery = ''
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])) }
+  function fmtSize(b) { return b >= 1048576 ? (b / 1048576).toFixed(1) + ' МБ' : (b / 1024).toFixed(0) + ' КБ' }
+  function fmtDate(iso) { try { return new Date(iso).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) } catch { return esc(iso) } }
+  function badge(type) {
+    const cls = type === 'release' ? 'release' : (type === 'snapshot' ? 'snapshot' : 'old')
+    const name = { release: 'релиз', snapshot: 'снапшот', old_beta: 'бета', old_alpha: 'альфа' }[type] || type
+    return '<span class="badge ' + cls + '">' + esc(name) + '</span>'
+  }
+  function nav() { return location.hash || '#/' }
+  function setRoute(name) { document.querySelectorAll('nav.head a[data-r]').forEach((a) => a.classList.toggle('on', a.dataset.r === name)) }
+
+  async function loadManifest() {
+    if (MANIFEST) return MANIFEST
+    try {
+      const r = await fetch(MANIFEST_URL, { headers: { Accept: 'application/json' } })
+      if (!r.ok) throw new Error('HTTP ' + r.status)
+      MANIFEST = await r.json()
+      fetchedAt = new Date()
+      return MANIFEST
+    } catch (e) {
+      const r = await fetch(FALLBACK)
+      const fb = await r.json()
+      MANIFEST = {
+        latest: fb.latest,
+        versions: (fb.versions || []).map((v) => ({ id: v.id, type: v.type === 'release' ? 'release' : 'snapshot', url: v.url, releaseTime: v.release_time, sha1: v.sha1 })),
+        _fallback: true,
+      }
+      fetchedAt = new Date()
+      return MANIFEST
+    }
+  }
+
+  function findVersion(id) { return (MANIFEST.versions || []).find((v) => v.id === id) }
+
+  async function fetchVersionDetail(entry) {
+    const r = await fetch(entry.url)
+    if (!r.ok) throw new Error('HTTP ' + r.status)
+    return r.json()
+  }
+
+  function homePage() {
+    setRoute('home')
+    const L = MANIFEST.latest || {}
+    const rel = findVersion(L.release) || {}
+    const snap = findVersion(L.snapshot) || {}
+    const counts = {}
+    for (const v of MANIFEST.versions) counts[v.type] = (counts[v.type] || 0) + 1
+    app.innerHTML =
+      '<h1>Версии Minecraft <span style="white-space:nowrap"><span class="live-dot"></span>в реальном времени</span></h1>' +
+      '<p class="sub">Источник: ' + (MANIFEST._fallback ? 'статический список Cubenorixx (Mojang недоступен из вашей сети)' : 'официальный манифест Mojang (piston-meta)') +
+      ' · обновлено: ' + fmtDate(fetchedAt) + ' · всего версий: <b>' + MANIFEST.versions.length + '</b></p>' +
+      '<div class="grid2">' +
+        '<div class="card"><h2>Первая строка ' + badge('release') + '</h2><div style="font-size:1.5rem;font-weight:700;margin:4px 0">' + esc(L.release || '—') + '</div>' +
+        '<div class="meta">выход: ' + fmtDate(rel.releaseTime) + '</div>' +
+        '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="#/v' + encodeURIComponent(L.release || '') + '">Подробнее и скачать</a></div></div>' +
+        '<div class="card"><h2>Свежий снапшот ' + badge('snapshot') + '</h2><div style="font-size:1.5rem;font-weight:700;margin:4px 0">' + esc(L.snapshot || '—') + '</div>' +
+        '<div class="meta">запись обновлена: ' + fmtDate(snap.releaseTime) + '</div>' +
+        '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn ghost" href="#/v' + encodeURIComponent(L.snapshot || '') + '">Подробнее</a></div></div>' +
+      '</div>' +
+      '<div class="card" style="margin-top:14px"><h2>Каталог версий</h2>' +
+      '<div class="filters">' +
+        ['all', 'release', 'snapshot', 'old_beta', 'old_alpha'].map((t) => '<button class="f' + (filterType === t ? ' on' : '') + '" data-t="' + t + '">' + ({ all: 'все', release: 'релизы', snapshot: 'снапшоты', old_beta: 'беты', old_alpha: 'альфы' }[t]) + (counts[t] ? ' · ' + counts[t] : '') + '</button>').join('') +
+      '</div>' +
+      '<input class="field" id="q" placeholder="Поиск версии… например 1.21 или 26.2" value="' + esc(filterQuery) + '">' +
+      '<div id="vlist" style="margin-top:10px"></div></div>' +
+      launcherCard() +
+      '<div class="card" style="margin-top:14px"><h2>API для разработчиков лаунчера</h2>' +
+      '<p class="note" style="margin-top:4px">Открытые JSON-эндпоинты и живые адреса Mojang — в разделе <a href="#/api">API</a>. Полная шпаргалка: <a href="/LAUNCHER-API.txt">/LAUNCHER-API.txt</a></p></div>'
+    renderList()
+    document.getElementById('q').addEventListener('input', (e) => { filterQuery = e.target.value; renderList() })
+    document.querySelectorAll('.filters .f').forEach((b) => b.addEventListener('click', () => { filterType = b.dataset.t; homePage() }))
+  }
+
+  function launcherCard() {
+    return '<div class="card" style="margin-top:14px"><h2>Скачать лаунчер Cubenorixx</h2>' +
+      '<p class="note" style="margin-top:4px">Лаунчер в разработке. Манифест обновлений уже подключён — как только выйдет установщик, кнопки станут активными автоматически.</p>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">' +
+      '<button class="btn" disabled>Windows — скоро</button><button class="btn ghost" disabled>Linux — скоро</button><button class="btn ghost" disabled>macOS — скоро</button>' +
+      '<a class="btn ghost" href="/api/launcher-update.json">Манифест обновлений</a></div></div>'
+  }
+
+  function renderList() {
+    const box = document.getElementById('vlist')
+    if (!box) return
+    const q = filterQuery.trim().toLowerCase()
+    let rows = MANIFEST.versions.filter((v) => (filterType === 'all' || v.type === filterType) && (!q || v.id.toLowerCase().includes(q)))
+    const total = rows.length
+    rows = rows.slice(0, 60)
+    if (!rows.length) { box.innerHTML = '<p class="note">Ничего не найдено.</p>'; return }
+    box.innerHTML = '<table><thead><tr><th>Версия</th><th>Тип</th><th>Дата выхода</th><th></th></tr></thead><tbody>' +
+      rows.map((v) => '<tr><td><a href="#/v' + encodeURIComponent(v.id) + '"><b>' + esc(v.id) + '</b></a></td><td>' + badge(v.type) + '</td><td class="meta">' + fmtDate(v.releaseTime) + '</td><td><a class="btn ghost" style="padding:5px 12px;font-size:.78rem" href="#/v' + encodeURIComponent(v.id) + '">скачать</a></td></tr>').join('') +
+      '</tbody></table>' + (total > 60 ? '<p class="note">Показаны первые 60 из ' + total + '. Уточните поиск.</p>' : '')
+  }
+
+  async function versionPage(id) {
+    setRoute('home')
+    app.innerHTML = '<div class="spinner">Получаем метаданные версии ' + esc(id) + '…</div>'
+    const entry = findVersion(id)
+    if (!entry) {
+      app.innerHTML = '<p class="err">Версия «' + esc(id) + '» не найдена в манифесте Mojang.</p><p><a class="btn ghost" style="margin-top:10px" href="#/">← Ко всем версиям</a></p>'
+      return
+    }
+    let d = null
+    try { d = await fetchVersionDetail(entry) } catch (e) {
+      app.innerHTML = '<p class="err">Не удалось получить данные версии: ' + esc(e.message) + '</p><p><a href="#/">← Назад</a></p>'
+      return
+    }
+    const dl = d.downloads || {}
+    const order = [['client', 'Клиент (jar)'], ['client_mappings', 'Клиентские маппинги'], ['server', 'Сервер (jar)'], ['server_mappings', 'Серверные маппинги']]
+    const java = d.javaVersion ? (d.javaVersion.majorVersion + (d.javaVersion.component ? ' (' + d.javaVersion.component + ')' : '')) : '—'
+    const assetsId = d.assets || '—'
+    const libCount = (d.libraries || []).length
+    const mainClass = d.mainClass || '—'
+    app.innerHTML =
+      '<p><a href="#/">← Все версии</a></p>' +
+      '<h1 style="margin-top:8px">' + esc(d.id || id) + ' ' + badge(entry.type) + '</h1>' +
+      '<p class="sub">Выход: ' + fmtDate(entry.releaseTime || d.releaseTime) + ' · Java: <b>' + esc(java) + '</b> · ассеты: <b>' + esc(assetsId) + '</b> · библиотек: <b>' + libCount + '</b> · mainClass: <code>' + esc(mainClass) + '</code></p>' +
+      '<div class="card"><h2>Загрузки (официальный CDN Mojang)</h2>' +
+      '<table><thead><tr><th>Файл</th><th>Размер</th><th>SHA-1</th><th></th></tr></thead><tbody>' +
+      order.filter(([k]) => dl[k]).map(([k, name]) => {
+        const f = dl[k]
+        return '<tr><td><b>' + name + '</b></td><td>' + fmtSize(f.size) + '</td>' +
+          '<td><span class="sha">' + esc(f.sha1) + '</span></td>' +
+          '<td><a class="btn" style="padding:6px 14px;font-size:.8rem" href="' + esc(f.url) + '" rel="noopener">Скачать</a></td></tr>'
+      }).join('') +
+      '</tbody></table>' +
+      '<p class="note">Лаунчер обязан сверять SHA-1 после загрузки. Метаданные версии: <a href="' + esc(entry.url) + '" rel="noopener">исходный JSON Mojang</a>.</p></div>' +
+      '<div class="card" style="margin-top:14px"><h2>Как это использует лаунчер</h2>' +
+      '<pre>1. Манифест:  GET ' + MANIFEST_URL + '\n2. Версия:    GET ' + esc(entry.url) + '\n3. Файлы:     downloads.client.url → проверить SHA-1 → запустить с java ' + esc(d.javaVersion ? d.javaVersion.majorVersion : '21') + '\n4. Библиотеки: libraries[*].downloads.artifact (правила rules для OS)</pre>' +
+      '<p class="note">Подробный разбор формата — в разделе <a href="#/api">API</a> и в <a href="/LAUNCHER-API.txt">/LAUNCHER-API.txt</a>.</p></div>'
+  }
+
+  function apiPage() {
+    setRoute('api')
+    const base = location.origin
+    app.innerHTML =
+      '<h1>API лаунчера Cubenorixx</h1>' +
+      '<p class="sub">Всё открытое, без ключей. Наш домен: <b>' + esc(base) + '</b>. Полная документация одним файлом: <a href="/LAUNCHER-API.txt">/LAUNCHER-API.txt</a></p>' +
+      '<div class="card"><h2>Наши эндпоинты (статические JSON)</h2><table><thead><tr><th>Эндпоинт</th><th>Назначение</th></tr></thead><tbody>' +
+      '<tr><td><a href="/api/ok">GET /api/ok</a></td><td>Проверка доступности API</td></tr>' +
+      '<tr><td><a href="/api/launcher-update.json">GET /api/launcher-update.json</a></td><td>Обновления лаунчера: версия, changelog, ссылки по ОС. <b>enabled=false</b>, пока установщика нет — лаунчер не должен предлагать загрузку</td></tr>' +
+      '<tr><td><a href="/api/mc-versions.json">GET /api/mc-versions.json</a></td><td>Резервный список версий (если piston-meta недоступен): id, type, url, sha1, java_version</td></tr>' +
+      '<tr><td><a href="/api/java-runtimes.json">GET /api/java-runtimes.json</a><br><a href="/api/modpacks.json">GET /api/modpacks.json</a><br><a href="/api/launcher-assets.json">GET /api/launcher-assets.json</a></td><td>Java-манифесты, сборки и ассеты лаунчера — черновики, заполняются по мере готовности</td></tr>' +
+      '</tbody></table></div>' +
+      '<div class="card" style="margin-top:14px"><h2>Живые версии — официальный манифест Mojang</h2>' +
+      '<pre>GET <span class="kv">https://piston-meta.mojang.com/mc/game/version_manifest_v2.json</span>\n→ { latest: { release, snapshot }, versions: [{ id, type, url, time, releaseTime, sha1, complianceLevel }] }\n\nGET <span class="kv">{versions[i].url}</span>   // JSON конкретной версии\n→ { downloads: { client, server, client_mappings, server_mappings },\n    javaVersion: { majorVersion, component }, libraries: [...], assets, mainClass }</pre>' +
+      '<p class="note">CORS открыт — можно запрашивать прямо со страницы. Файлы качаются с <b>piston-data.mojang.com</b> (ссылки в downloads.*.url). Обязательно сверяйте SHA-1. Не дёргайте манифест чаще раза в 60 секунд.</p></div>' +
+      '<div class="card" style="margin-top:14px"><h2>Правила Cubenorixx</h2>' +
+      '<table><tbody>' +
+      '<tr><td>Честные манифесты</td><td>enabled=false, пока бинарь не опубликован. Никаких фиктивных ссылок.</td></tr>' +
+      '<tr><td>User-Agent</td><td><code>Cubenorix/1.0 (+https://cubenorix.github.io)</code> или лаунчерная версия</td></tr>' +
+      '<tr><td>Источник файлов</td><td>Только официальный CDN Mojang. Никаких перепаков.</td></tr>' +
+      '<tr><td>Резервный путь</td><td>piston-meta недоступен → /api/mc-versions.json (автоматически, так работает и эта страница)</td></tr>' +
+      '</tbody></table></div>'
+  }
+
+  async function router() {
+    const h = nav()
+    const m = h.match(/^#\/v\/?(.+)$/)
+    if (m) { await loadManifest().catch(() => {}); await versionPage(decodeURIComponent(m[1])); return }
+    if (h.startsWith('#/api')) { apiPage(); return }
+    try {
+      await loadManifest()
+      homePage()
+    } catch (e) {
+      app.innerHTML = '<p class="err">Не удалось загрузить данные: ' + esc(e.message) + '</p><p class="note">Проверьте интернет и обновите страницу.</p>'
+    }
+  }
+  window.addEventListener('hashchange', router)
+  router()
+})()
+</script>
+</body>
+</html>
