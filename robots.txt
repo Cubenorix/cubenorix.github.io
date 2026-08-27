@@ -13,5 +13,5 @@ Disallow: /beta-test
 Disallow: /connection?test
 Disallow: /hash
 
-Sitemap: https://cubenorix.github.io/sitemap.xml
+Sitemap: https://cubenorixx.github.io/sitemap.xml
 Host: cubenorixx.romantic-buffalo.workers.dev
