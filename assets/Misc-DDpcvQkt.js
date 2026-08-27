@@ -157,7 +157,7 @@ GET /mr-api/v2/project/{id}/version`}),(0,w.jsx)(`p`,{className:`mt-4 text-white
 
 Файлы берутся с разрешённых CDN источников. Cubenorixx не присваивает сторонние проекты и не меняет их лицензии.
 
-Официальные адреса: https://cubenorixx.github.io/ и https://t.me/Cubenorix.
+Официальные адреса: https://cubenorix.github.io/ и https://t.me/Cubenorix.
 Неофициально: Minecraft — Mojang Studios.`,how:`Как пользоваться
 1. Откройте карточку проекта.
 2. Выберите версию Minecraft и загрузчик.
