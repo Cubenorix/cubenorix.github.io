@@ -1,0 +1,162 @@
+════════════════════════════════════════════════════════════════════
+  CUBENORIXX — ДОКУМЕНТАЦИЯ ДЛЯ РАЗРАБОТЧИКА MINECRAFT-ЛАУНЧЕРА
+  Версия документа: 2.0 · 28.08.2026 · поддерживается командой Cubenorixx
+════════════════════════════════════════════════════════════════════
+
+1. ДОМЕНЫ
+─────────
+  Сайт:               https://cubenorix.github.io          (основной, GitHub Pages)
+  Страница лаунчера:  https://cubenorix.github.io/launcher (живые версии + скачивание)
+  API (наш, статический JSON): https://cubenorix.github.io/api/...
+  Полная версия сайта (Cloudflare Worker, с серверным релеем):
+                      https://cubenorix.github.io  (пока не задеплоен)
+  Официальные адреса: https://cubenorix.github.io/official/
+  Telegram-канал:     https://t.me/Cubenorix
+  Поддержка:          https://t.me/Cubenorixsupportbot
+
+  ВАЖНО: сайт на github.io — статический. Все /api/*.json — обычные файлы.
+  Серверных роутоv (dynamic /api/health, /api/agg-search, /mr-cdn, /go-dl)
+  на github.io НЕТ — они появятся после деплоя Cloudflare Worker.
+
+2. СТРАНИЦА ЛАУНЧЕРА (готова, работает вживую)
+───────────────────────────────────────────────
+  https://cubenorix.github.io/launcher
+
+  Hash-роуты:
+    #/            — последняя версия (релиз + снапшот), каталог всех версий
+                    с фильтром (релизы/снапшоты/беты/альфы) и поиском,
+                    статус скачивания лаунчера
+    #/v<версия>   — страница версии в реальном времени: тип, дата выхода,
+                    требуемая Java, ассеты, число библиотек, mainClass и
+                    ТАБЛИЦА ЗАГРУЗОК: клиент jar, сервер jar, маппинги
+                    (размер + SHA-1 + прямая ссылка на CDN Mojang)
+    #/api         — краткая документация API прямо на странице
+
+  Источник данных — официальный манифест Mojang (живой, тянется браузером
+  напрямую, CORS открыт). Если Mojang недоступен — автоматический резерв
+  на наш /api/mc-versions.json. На странице это честно отображается.
+
+3. ЖИВЫЕ ВЕРСИИ MINECRAFT (официальный источник Mojang)
+────────────────────────────────────────────────────────
+  Манифест всех версий:
+    GET https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+    → {
+        "latest": { "release": "26.2", "snapshot": "26.3-snapshot-10" },
+        "versions": [ { "id", "type": release|snapshot|old_beta|old_alpha,
+                         "url", "time", "releaseTime", "sha1",
+                         "complianceLevel" }, ... ]   // ~900 версий
+      }
+
+  Метаданные конкретной версии (url из манифеста):
+    GET https://piston-meta.mojang.com/v1/packages/<sha1>/<id>.json
+    → {
+        "id", "releaseTime", "mainClass", "assets",
+        "javaVersion": { "majorVersion": 21, "component": "java-runtime-gamma" },
+        "downloads": {
+          "client":          { "url", "size", "sha1" },
+          "client_mappings": { "url", "size", "sha1" },
+          "server":          { "url", "size", "sha1" },
+          "server_mappings": { "url", "size", "sha1" }
+        },
+        "libraries": [ { "downloads": { "artifact": { url, size, sha1 } },
+                         "rules": [ { "action", "os": { "name" } } ], ... } ],
+        "assetIndex": { "id", "url", "sha1", "totalSize" }
+      }
+
+  Сами файлы (jar'ы, библиотеки, ассеты) лежат на:
+    https://piston-data.mojang.com/...      (ссылки всегда внутри JSON выше)
+  Правила для лаунчера Mojang: https://www.minecraft.net/usage-guidelines
+
+  Требования к запросам:
+    • User-Agent: Cubenorix/1.0 (+https://cubenorix.github.io) — или версия лаунчера
+    • манифест обновляйте не чаще 1 раза в 60 секунд (кэшируйте на диск)
+    • ОБЯЗАТЕЛЬНО сверять SHA-1 каждого скачанного файла, при несовпадении — перекачать
+    • файлы НЕ перепаковывать и НЕ зеркалировать — только официальный CDN Mojang
+
+4. НАШ API (https://cubenorix.github.io/api/...)
+────────────────────────────────────────────────
+  GET /api/ok
+      → {"ok":true} — проверка доступности.
+
+  GET /api/launcher-update.json          ← ГЛАВНЫЙ манифест обновлений лаунчера
+      Формат (schema_version 1):
+      {
+        "schema_version": 1,
+        "status": "draft",                 // draft | public
+        "enabled": false,                  // ← ЛАУНЧЕР НЕ ДОЛЖЕН ПРЕДЛАГАТЬ
+                                           //   ЗАГРУЗКУ, ПОКА enabled=false
+        "latest_version": null,            // например "0.1.0"
+        "release_date": null,              // ISO 8601
+        "download_url_windows": null,      // прямая ссылка на установщик
+        "download_url_mac": null,
+        "download_url_linux": null,
+        "sha256_windows": null,            // обязательно при публикации
+        "changelog": "...",
+        "min_launcher_version": null       // ниже неё — принудительное обновление
+      }
+      Логика лаунчера: сверить свою версию с latest_version; если
+      min_launcher_version > текущая → качать download_url_*, проверить
+      sha256, запускать установку. Пока enabled=false — только показать
+      «Лаунчер в разработке».
+
+  GET /api/mc-versions.json
+      Резервный список версий (когда piston-meta недоступен):
+      { "schema_version", "source", "generated_at",
+        "latest": { "release", "snapshot" },
+        "versions": [ { "id", "type", "url", "sha1", "release_time",
+                        "java_version", "java_component" } ] }
+      Лаунчер: сначала piston-meta (живой), при таймауте/ошибке → этот файл.
+
+  GET /api/java-runtimes.json
+      Java-манифест (java8/java17/java21). Пока enabled=false — черновик.
+      Когда включим: ссылки на официальные рантаймы Adoptium/Mojang,
+      структура { "enabled", "vendor_policy", "javaXX": {...} }.
+
+  GET /api/modpacks.json   → сейчас [] (заполним, когда появятся сборки)
+  GET /api/featured-mods.json → список slug рекомендуемых модов (Modrinth)
+  GET /api/launcher-assets.json → ассеты UI лаунчера (черновик)
+
+5. КАК ЗАПУСКАТЬ ВЕРСИЮ (стандартный процесс)
+──────────────────────────────────────────────
+  1) Манифест → найти версию → взять её url.
+  2) Скачать JSON версии; распарсить downloads/libraries/assetIndex.
+  3) Скачать клиент: downloads.client.url → проверить SHA-1.
+  4) Скачать библиотеки: libraries[*].downloads.artifact, соблюдая rules
+     (os.name = windows/linux/osx; если rules нет — библиотека для всех).
+  5) Скачать assetIndex (assetIndex.url), затем недостающие ассеты
+     с https://resources.download.minecraft.net/<первые 2 символа hash>/<hash>.
+  6) Java: javaVersion.majorVersion (например 8/17/21) — из нашего
+     java-runtimes.json или установленной.
+  7) Запуск:
+     java -cp client.jar;библиотеки net.minecraft.client.main.Main
+       --username <ник> --version <id> --gameDir <папка>
+       --assetsDir <assets> --assetIndex <assetsId> --accessToken 0
+     (точные arguments mainClass/arguments из JSON версии)
+
+6. ПРАВИЛА ПРОЕКТА (важно!)
+────────────────────────────
+  • Не врать в манифестах: enabled=false, пока файлов реально нет.
+    Установщик/лаунчер не должен показывать кнопки загрузки при enabled=false.
+  • Некомерческий проект: никакой рекламы, никакой платной установки.
+  • Никаких перепаков ванильных файлов; моды — только через официальные API
+    (Modrinth) или с сайтов авторов.
+  • Название: Cubenorixx (двойное x). Канал: @Cubenorix (одинарное x!).
+  • При переезде домена: всё относительное; меняется только origin
+    (у нас в сборке это env CUBENORIXX_ORIGIN; для лаунчера — константа).
+
+7. ПЛАН ДАЛЬНЕЙШЕГО ЗАПУСКА ЛАУНЧЕРА
+─────────────────────────────────────
+  Шаг 1. Готов ядро лаунчера (скачивание по процессу из раздела 5,
+         проверка SHA-1, офлайн-режим).
+  Шаг 2. Опубликовать установщик; заполнить /api/launcher-update.json:
+         enabled=true, latest_version, download_url_*, sha256, changelog.
+  Шаг 3. Автообновление: лаунчер сверяет /api/launcher-update.json при старте.
+  Шаг 4. Java-рантаймы: включить /api/java-runtimes.json.
+  Шаг 5. Сборки: /api/modpacks.json; серверные роутоы — после деплоя
+         Cloudflare Worker (тот же zip Cubenorixx-deploy.zip).
+
+8. КОНТАКТЫ
+────────────
+  Канал: https://t.me/Cubenorix  ·  Поддержка: @Cubenorixsupportbot
+  Вопросы по этому документу — в поддержку, отвечаем быстро.
+════════════════════════════════════════════════════════════════════
