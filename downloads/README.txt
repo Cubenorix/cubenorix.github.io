@@ -1,4 +1,4 @@
-Cubexus launcher download storage
+Cubenorixx launcher download storage
 
 No launcher, modpack or Java binary is published yet.
 Do not replace this notice with an unverified executable or archive.

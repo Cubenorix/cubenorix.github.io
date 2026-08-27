@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://cubenorix.github.io/</loc><lastmod>2026-08-23</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
   <url><loc>https://cubenorix.github.io/official/</loc><lastmod>2026-08-23</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://cubenorix.github.io/license/</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://cubenorix.github.io/how/</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://cubenorix.github.io/minecraft-mods/</loc><lastmod>2026-08-23</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
   <url><loc>https://cubenorix.github.io/minecraft-shaders/</loc><lastmod>2026-08-23</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
   <url><loc>https://cubenorix.github.io/minecraft-plugins/</loc><lastmod>2026-08-23</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>

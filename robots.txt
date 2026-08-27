@@ -14,4 +14,4 @@ Disallow: /connection?test
 Disallow: /hash
 
 Sitemap: https://cubenorix.github.io/sitemap.xml
-Host: cubenorix.github.io
+Host: cubenorixx.romantic-buffalo.workers.dev

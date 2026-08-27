@@ -1,7 +1,6 @@
 /*
- * Cubexus - Minecraft content aggregator
- * Copyright (C) 2025-2026 Cubexus Team
- * SPDX-License-Identifier: AGPL-3.0-or-later
+ * Cubenorixx - Minecraft content aggregator
+ * Copyright (C) 2025-2026 Cubenorixx Team
  */
 #!/usr/bin/env node
 import { createWriteStream } from 'fs'
@@ -23,21 +22,21 @@ if (cmd === 'get' && a && b) {
 }
 
 if (cmd === 'pack-out') {
-  writeFileSync('cubexus-pack.json', JSON.stringify({ v: 1, at: Date.now(), builds: [], favorites: [] }, null, 2))
-  console.log('cubexus-pack.json')
+  writeFileSync('cubenorixx-pack.json', JSON.stringify({ v: 1, at: Date.now(), builds: [], favorites: [] }, null, 2))
+  console.log('cubenorixx-pack.json')
   process.exit(0)
 }
 
 if (cmd === 'pack-in' && a) {
   const j = JSON.parse(readFileSync(a, 'utf8'))
   if (j.v !== 1) {
-    console.error('не пакет Cubexus')
+    console.error('не пакет Cubenorixx')
     process.exit(1)
   }
   console.log('сборок', (j.builds || []).length, 'избранного', (j.favorites || []).length)
   process.exit(0)
 }
 
-console.log('cubexus-bridge get <url> <file>')
-console.log('cubexus-bridge pack-out')
-console.log('cubexus-bridge pack-in <json>')
+console.log('cubenorixx-bridge get <url> <file>')
+console.log('cubenorixx-bridge pack-out')
+console.log('cubenorixx-bridge pack-in <json>')
