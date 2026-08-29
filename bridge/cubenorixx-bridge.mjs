@@ -1,6 +1,6 @@
 /*
- * Cubenorixx - Minecraft content aggregator
- * Copyright (C) 2025-2026 Cubenorixx Team
+ * Cubenorix - Minecraft content aggregator
+ * Copyright (C) 2025-2026 Cubenorix Team
  */
 #!/usr/bin/env node
 import { createWriteStream } from 'fs'
@@ -30,7 +30,7 @@ if (cmd === 'pack-out') {
 if (cmd === 'pack-in' && a) {
   const j = JSON.parse(readFileSync(a, 'utf8'))
   if (j.v !== 1) {
-    console.error('не пакет Cubenorixx')
+    console.error('не пакет Cubenorix')
     process.exit(1)
   }
   console.log('сборок', (j.builds || []).length, 'избранного', (j.favorites || []).length)

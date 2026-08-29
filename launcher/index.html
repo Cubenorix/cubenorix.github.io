@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Лаунчер Cubenorixx — версии Minecraft, загрузчики модов, API</title>
-<meta name="description" content="Живая информация о версиях Minecraft для лаунчера Cubenorixx: релизы, снапшоты, прямые загрузки, Forge/Fabric/NeoForge/Quilt, ассеты и исходники, открытый API.">
+<title>Лаунчер Cubenorix — версии Minecraft, загрузчики модов, API</title>
+<meta name="description" content="Живая информация о версиях Minecraft для лаунчера Cubenorix: релизы, снапшоты, прямые загрузки, Forge/Fabric/NeoForge/Quilt, ассеты и исходники, открытый API.">
 <meta name="theme-color" content="#ff7a1a">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <style>
@@ -59,7 +59,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
 <div class="wrap">
   <header class="top">
     <img src="/logo-512.png" alt="">
-    <div class="logo"><b>Cubenorixx Launcher</b><span>версии Minecraft, загрузчики модов и API · в реальном времени</span></div>
+    <div class="logo"><b>Cubenorix Launcher</b><span>версии Minecraft, загрузчики модов и API · в реальном времени</span></div>
     <nav class="head">
       <a href="#/" data-r="home">Версии</a>
       <a href="#/loaders" data-r="loaders">Загрузчики</a>
@@ -69,7 +69,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
   </header>
   <main id="app"><div class="spinner">Загружаем живые данные Mojang…</div></main>
   <footer class="bot">
-    Cubenorixx — некоммерческий фан-проект. Minecraft — товарный знак Mojang Studios. Версии и файлы раздаёт официальный CDN Mojang (piston-meta / piston-data).<br>
+    Cubenorix — некоммерческий фан-проект. Minecraft — товарный знак Mojang Studios. Версии и файлы раздаёт официальный CDN Mojang (piston-meta / piston-data).<br>
     Канал <a href="https://t.me/Cubenorix" rel="noopener">t.me/Cubenorix</a> · Поддержка <a href="https://t.me/Cubenorixsupportbot" rel="noopener">@Cubenorixsupportbot</a> · <a href="/official/">Официальные адреса</a> · <a href="/LAUNCHER-API.txt">Документация API (txt)</a>
   </footer>
 </div>
@@ -133,7 +133,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
     for (const v of MANIFEST.versions) counts[v.type] = (counts[v.type] || 0) + 1
     app.innerHTML =
       '<h1>Версии Minecraft <span style="white-space:nowrap"><span class="live-dot"></span>в реальном времени</span></h1>' +
-      '<p class="sub">Источник: ' + (MANIFEST._fallback ? 'статический список Cubenorixx (Mojang недоступен из вашей сети)' : 'официальный манифест Mojang (piston-meta)') +
+      '<p class="sub">Источник: ' + (MANIFEST._fallback ? 'статический список Cubenorix (Mojang недоступен из вашей сети)' : 'официальный манифест Mojang (piston-meta)') +
       ' · обновлено: ' + fmtDate(fetchedAt) + ' · всего версий: <b>' + MANIFEST.versions.length + '</b></p>' +
       '<div class="grid2">' +
         '<div class="card"><h2>Первая строка ' + badge('release') + '</h2><div style="font-size:1.5rem;font-weight:700;margin:4px 0">' + esc(L.release || '—') + '</div>' +
@@ -151,7 +151,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       '</div>' +
       '<input class="field" id="q" placeholder="Поиск версии… например 1.21 или 26.2" value="' + esc(filterQuery) + '">' +
       '<div id="vlist" style="margin-top:10px"></div></div>' +
-      '<div class="card" style="margin-top:14px"><h2>Скачать лаунчер Cubenorixx</h2>' +
+      '<div class="card" style="margin-top:14px"><h2>Скачать лаунчер Cubenorix</h2>' +
       '<p class="note" style="margin-top:4px">Лаунчер в разработке. Манифест обновлений уже подключён — как только выйдет установщик, кнопки станут активными автоматически.</p>' +
       '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">' +
       '<button class="btn" disabled>Windows — скоро</button><button class="btn ghost" disabled>Linux — скоро</button><button class="btn ghost" disabled>macOS — скоро</button>' +
@@ -305,7 +305,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
           const top = mcs[0]
           const topV = pr[top + '-latest']
           const iurl = function (mc, fv) { return 'https://maven.minecraftforge.net/net/minecraftforge/forge/' + mc + '-' + fv + '/forge-' + mc + '-' + fv + '-installer.jar' }
-          const srcNote = fd.live ? 'живой файл files.minecraftforge.net' : 'резервная копия Cubenorixx от ' + fmtDate(fd.at) + ' (у Forge нет CORS для браузера)'
+          const srcNote = fd.live ? 'живой файл files.minecraftforge.net' : 'резервная копия Cubenorix от ' + fmtDate(fd.at) + ' (у Forge нет CORS для браузера)'
           box.insertAdjacentHTML('beforeend', card('Forge <span class="badge release">' + mcs.length + '+ версий MC</span>',
             '<div style="font-size:1.2rem;font-weight:700">' + esc(top) + ' → ' + esc(topV) + '</div>' +
             '<div class="meta">' + mcs.slice(0, 6).map(function (mc) { return esc(mc) + ' → ' + esc(pr[mc + '-latest']) + (pr[mc + '-recommended'] ? ' ⭐' : '') }).join(' · ') + '</div>' +
@@ -323,7 +323,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
     setRoute('api')
     const base = location.origin
     app.innerHTML =
-      '<h1>API лаунчера Cubenorixx</h1>' +
+      '<h1>API лаунчера Cubenorix</h1>' +
       '<p class="sub">Всё открытое, без ключей. Наш домен: <b>' + esc(base) + '</b>. Полная документация одним файлом: <a href="/LAUNCHER-API.txt">/LAUNCHER-API.txt</a></p>' +
       '<div class="card"><h2>Наши эндпоинты (статические JSON)</h2><table><thead><tr><th>Эндпоинт</th><th>Назначение</th></tr></thead><tbody>' +
       '<tr><td><a href="/api/ok.txt">GET /api/ok.txt</a></td><td>Проверка доступности API</td></tr>' +
@@ -340,7 +340,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       '<div class="card" style="margin-top:14px"><h2>Ассеты, текстуры и исходники</h2>' +
       '<pre>// Из JSON версии:\nassetIndex: { id, url, sha1, totalSize }   // индекс всех ресурсов\n→ каждый файл: <span class="kv">https://resources.download.minecraft.net/&lt;sha1[0:2]&gt;/&lt;sha1&gt;</span>\n  (текстуры, звуки, языки; ключи вида minecraft/textures/block/stone.png)\n\nИсходники: client_mappings / server_mappings (в downloads версии)\n  → официальные маппинги Mojang для декомпиляции читаемого кода.\n  Сам исходный код Mojang не публикует. Открытые маппинги: <span class="kv">https://meta.fabricmc.net/v2/versions/yarn</span>\n  Загрузчики открыты: github.com/MinecraftForge · FabricMC · neoforged · QuiltMC</pre>' +
       '</div>' +
-      '<div class="card" style="margin-top:14px"><h2>Правила Cubenorixx</h2>' +
+      '<div class="card" style="margin-top:14px"><h2>Правила Cubenorix</h2>' +
       '<table><tbody>' +
       '<tr><td>Честные манифесты</td><td>enabled=false, пока бинарь не опубликован. Никаких фиктивных ссылок.</td></tr>' +
       '<tr><td>User-Agent</td><td><code>Cubenorix/1.0 (+https://cubenorix.github.io)</code> или версия лаунчера</td></tr>' +
