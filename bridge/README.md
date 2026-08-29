@@ -1,10 +1,10 @@
-# Cubenorixx Bridge 0.1.0
+# Cubenorix Bridge 0.1.0
 
 Тихий мост. Не VPN и не взлом чужих сайтов.
 
 ## Что делает
 
-1. Качает файл через origin Cubenorixx (`/api/file`), если cdn.modrinth.com у тебя не резолвится.
+1. Качает файл через origin Cubenorix (`/api/file`), если cdn.modrinth.com у тебя не резолвится.
 2. Собирает и читает `cubenorixx-pack.json` — сборки и избранное, чтобы передать другу.
 
 ## Сканер
