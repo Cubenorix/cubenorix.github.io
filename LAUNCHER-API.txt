@@ -141,9 +141,14 @@
     Открытый код: https://github.com/neoforged/NeoForge
 
   FORGE (https://files.minecraftforge.net)
+    ВНИМАНИЕ: у files.minecraftforge.net НЕТ CORS — браузерный fetch не сработает.
+    Лаунчер (не браузер) может читать живой файл:
     GET https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json
         → { "promos": { "1.21.4-latest": "54.1.18", "1.21.4-recommended": "54.1.14", ... } }
         (<mc>-latest = свежая, <mc>-recommended = стабильная, ⭐)
+    Для сайта/браузера у нас есть снимок (обновляется при каждой сборке сайта):
+    GET https://cubenorix.github.io/api/forge-promos.json
+        → { "schema_version", "source", "generated_at", "live", "promos": {...} }
     Установщик: https://maven.minecraftforge.net/net/minecraftforge/forge/<mc>-<v>/forge-<mc>-<v>-installer.jar
     Открытый код: https://github.com/MinecraftForge/MinecraftForge
 
