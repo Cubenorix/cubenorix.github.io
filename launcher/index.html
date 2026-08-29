@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Лаунчер Cubenorixx — версии Minecraft в реальном времени</title>
-<meta name="description" content="Живая информация о версиях Minecraft для лаунчера Cubenorixx: релизы, снапшоты, прямые загрузки клиента и сервера, Java-требования и открытый API.">
+<title>Лаунчер Cubenorixx — версии Minecraft, загрузчики модов, API</title>
+<meta name="description" content="Живая информация о версиях Minecraft для лаунчера Cubenorixx: релизы, снапшоты, прямые загрузки, Forge/Fabric/NeoForge/Quilt, ассеты и исходники, открытый API.">
 <meta name="theme-color" content="#ff7a1a">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <style>
@@ -46,9 +46,8 @@ table { width: 100%; border-collapse: collapse; font-size: .88rem; }
 th { text-align: left; color: #9a9aa3; font-weight: 500; font-size: .78rem; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.1); }
 td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,.05); vertical-align: top; }
 td .sha { font-family: ui-monospace, monospace; font-size: .72rem; color: #8a8a93; word-break: break-all; }
-.soon { border: 1px dashed rgba(255,255,255,.2); border-radius: 18px; padding: 20px; color: #a5a5ae; font-size: .9rem; }
 code, pre { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; }
-pre { background: rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px 14px; overflow-x: auto; font-size: .76rem; line-height: 1.55; color: #d7d7de; }
+pre { background: rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px 14px; overflow-x: auto; font-size: .76rem; line-height: 1.55; color: #d7d7de; white-space: pre-wrap; word-break: break-all; }
 .kv { color: #ffad55; }
 .note { font-size: .78rem; color: #8a8a93; margin-top: 8px; }
 footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.08); color: #8a8a93; font-size: .8rem; }
@@ -60,9 +59,10 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
 <div class="wrap">
   <header class="top">
     <img src="/logo-512.png" alt="">
-    <div class="logo"><b>Cubenorixx Launcher</b><span>версии Minecraft в реальном времени · данные Mojang</span></div>
+    <div class="logo"><b>Cubenorixx Launcher</b><span>версии Minecraft, загрузчики модов и API · в реальном времени</span></div>
     <nav class="head">
       <a href="#/" data-r="home">Версии</a>
+      <a href="#/loaders" data-r="loaders">Загрузчики</a>
       <a href="#/api" data-r="api">API</a>
       <a href="/">← На сайт</a>
     </nav>
@@ -70,7 +70,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
   <main id="app"><div class="spinner">Загружаем живые данные Mojang…</div></main>
   <footer class="bot">
     Cubenorixx — некоммерческий фан-проект. Minecraft — товарный знак Mojang Studios. Версии и файлы раздаёт официальный CDN Mojang (piston-meta / piston-data).<br>
-    Канал <a href="https://t.me/Cubenorix" rel="noopener">t.me/Cubenorix</a> · Поддержка <a href="https://t.me/Cubenorixsupportbot" rel="noopener">@Cubenorixsupportbot</a> · <a href="/official/">Официальные адреса</a>
+    Канал <a href="https://t.me/Cubenorix" rel="noopener">t.me/Cubenorix</a> · Поддержка <a href="https://t.me/Cubenorixsupportbot" rel="noopener">@Cubenorixsupportbot</a> · <a href="/official/">Официальные адреса</a> · <a href="/LAUNCHER-API.txt">Документация API (txt)</a>
   </footer>
 </div>
 <script>
@@ -84,16 +84,16 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
   let filterType = 'all'
   let filterQuery = ''
 
-  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])) }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] }) }
   function fmtSize(b) { return b >= 1048576 ? (b / 1048576).toFixed(1) + ' МБ' : (b / 1024).toFixed(0) + ' КБ' }
-  function fmtDate(iso) { try { return new Date(iso).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) } catch { return esc(iso) } }
+  function fmtDate(iso) { try { return new Date(iso).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) } catch (e) { return esc(iso) } }
   function badge(type) {
     const cls = type === 'release' ? 'release' : (type === 'snapshot' ? 'snapshot' : 'old')
     const name = { release: 'релиз', snapshot: 'снапшот', old_beta: 'бета', old_alpha: 'альфа' }[type] || type
     return '<span class="badge ' + cls + '">' + esc(name) + '</span>'
   }
   function nav() { return location.hash || '#/' }
-  function setRoute(name) { document.querySelectorAll('nav.head a[data-r]').forEach((a) => a.classList.toggle('on', a.dataset.r === name)) }
+  function setRoute(name) { document.querySelectorAll('nav.head a[data-r]').forEach(function (a) { a.classList.toggle('on', a.dataset.r === name) }) }
 
   async function loadManifest() {
     if (MANIFEST) return MANIFEST
@@ -108,7 +108,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       const fb = await r.json()
       MANIFEST = {
         latest: fb.latest,
-        versions: (fb.versions || []).map((v) => ({ id: v.id, type: v.type === 'release' ? 'release' : 'snapshot', url: v.url, releaseTime: v.release_time, sha1: v.sha1 })),
+        versions: (fb.versions || []).map(function (v) { return { id: v.id, type: v.type === 'release' ? 'release' : 'snapshot', url: v.url, releaseTime: v.release_time, sha1: v.sha1 } }),
         _fallback: true,
       }
       fetchedAt = new Date()
@@ -116,7 +116,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
     }
   }
 
-  function findVersion(id) { return (MANIFEST.versions || []).find((v) => v.id === id) }
+  function findVersion(id) { return (MANIFEST.versions || []).find(function (v) { return v.id === id }) }
 
   async function fetchVersionDetail(entry) {
     const r = await fetch(entry.url)
@@ -145,36 +145,36 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       '</div>' +
       '<div class="card" style="margin-top:14px"><h2>Каталог версий</h2>' +
       '<div class="filters">' +
-        ['all', 'release', 'snapshot', 'old_beta', 'old_alpha'].map((t) => '<button class="f' + (filterType === t ? ' on' : '') + '" data-t="' + t + '">' + ({ all: 'все', release: 'релизы', snapshot: 'снапшоты', old_beta: 'беты', old_alpha: 'альфы' }[t]) + (counts[t] ? ' · ' + counts[t] : '') + '</button>').join('') +
+        ['all', 'release', 'snapshot', 'old_beta', 'old_alpha'].map(function (t) {
+          return '<button class="f' + (filterType === t ? ' on' : '') + '" data-t="' + t + '">' + ({ all: 'все', release: 'релизы', snapshot: 'снапшоты', old_beta: 'беты', old_alpha: 'альфы' }[t]) + (counts[t] ? ' · ' + counts[t] : '') + '</button>'
+        }).join('') +
       '</div>' +
       '<input class="field" id="q" placeholder="Поиск версии… например 1.21 или 26.2" value="' + esc(filterQuery) + '">' +
       '<div id="vlist" style="margin-top:10px"></div></div>' +
-      launcherCard() +
-      '<div class="card" style="margin-top:14px"><h2>API для разработчиков лаунчера</h2>' +
-      '<p class="note" style="margin-top:4px">Открытые JSON-эндпоинты и живые адреса Mojang — в разделе <a href="#/api">API</a>. Полная шпаргалка: <a href="/LAUNCHER-API.txt">/LAUNCHER-API.txt</a></p></div>'
-    renderList()
-    document.getElementById('q').addEventListener('input', (e) => { filterQuery = e.target.value; renderList() })
-    document.querySelectorAll('.filters .f').forEach((b) => b.addEventListener('click', () => { filterType = b.dataset.t; homePage() }))
-  }
-
-  function launcherCard() {
-    return '<div class="card" style="margin-top:14px"><h2>Скачать лаунчер Cubenorixx</h2>' +
+      '<div class="card" style="margin-top:14px"><h2>Скачать лаунчер Cubenorixx</h2>' +
       '<p class="note" style="margin-top:4px">Лаунчер в разработке. Манифест обновлений уже подключён — как только выйдет установщик, кнопки станут активными автоматически.</p>' +
       '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">' +
       '<button class="btn" disabled>Windows — скоро</button><button class="btn ghost" disabled>Linux — скоро</button><button class="btn ghost" disabled>macOS — скоро</button>' +
-      '<a class="btn ghost" href="/api/launcher-update.json">Манифест обновлений</a></div></div>'
+      '<a class="btn ghost" href="/api/launcher-update.json">Манифест обновлений</a></div></div>' +
+      '<div class="card" style="margin-top:14px"><h2>API для разработчиков лаунчера</h2>' +
+      '<p class="note" style="margin-top:4px">Открытые JSON-эндпоинты, живые адреса Mojang и метасерверы загрузчиков — в разделе <a href="#/api">API</a>. Полная шпаргалка: <a href="/LAUNCHER-API.txt">/LAUNCHER-API.txt</a></p></div>'
+    renderList()
+    document.getElementById('q').addEventListener('input', function (e) { filterQuery = e.target.value; renderList() })
+    document.querySelectorAll('.filters .f').forEach(function (b2) { b2.addEventListener('click', function () { filterType = b2.dataset.t; homePage() }) })
   }
 
   function renderList() {
     const box = document.getElementById('vlist')
     if (!box) return
     const q = filterQuery.trim().toLowerCase()
-    let rows = MANIFEST.versions.filter((v) => (filterType === 'all' || v.type === filterType) && (!q || v.id.toLowerCase().includes(q)))
+    let rows = MANIFEST.versions.filter(function (v) { return (filterType === 'all' || v.type === filterType) && (!q || v.id.toLowerCase().includes(q)) })
     const total = rows.length
     rows = rows.slice(0, 60)
     if (!rows.length) { box.innerHTML = '<p class="note">Ничего не найдено.</p>'; return }
     box.innerHTML = '<table><thead><tr><th>Версия</th><th>Тип</th><th>Дата выхода</th><th></th></tr></thead><tbody>' +
-      rows.map((v) => '<tr><td><a href="#/v' + encodeURIComponent(v.id) + '"><b>' + esc(v.id) + '</b></a></td><td>' + badge(v.type) + '</td><td class="meta">' + fmtDate(v.releaseTime) + '</td><td><a class="btn ghost" style="padding:5px 12px;font-size:.78rem" href="#/v' + encodeURIComponent(v.id) + '">скачать</a></td></tr>').join('') +
+      rows.map(function (v) {
+        return '<tr><td><a href="#/v' + encodeURIComponent(v.id) + '"><b>' + esc(v.id) + '</b></a></td><td>' + badge(v.type) + '</td><td class="meta">' + fmtDate(v.releaseTime) + '</td><td><a class="btn ghost" style="padding:5px 12px;font-size:.78rem" href="#/v' + encodeURIComponent(v.id) + '">скачать</a></td></tr>'
+      }).join('') +
       '</tbody></table>' + (total > 60 ? '<p class="note">Показаны первые 60 из ' + total + '. Уточните поиск.</p>' : '')
   }
 
@@ -192,7 +192,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       return
     }
     const dl = d.downloads || {}
-    const order = [['client', 'Клиент (jar)'], ['client_mappings', 'Клиентские маппинги'], ['server', 'Сервер (jar)'], ['server_mappings', 'Серверные маппинги']]
+    const order = [['client', 'Клиент (jar)'], ['client_mappings', 'Клиентские маппинги (исходники)'], ['server', 'Сервер (jar)'], ['server_mappings', 'Серверные маппинги (исходники)']]
     const java = d.javaVersion ? (d.javaVersion.majorVersion + (d.javaVersion.component ? ' (' + d.javaVersion.component + ')' : '')) : '—'
     const assetsId = d.assets || '—'
     const libCount = (d.libraries || []).length
@@ -203,17 +203,106 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       '<p class="sub">Выход: ' + fmtDate(entry.releaseTime || d.releaseTime) + ' · Java: <b>' + esc(java) + '</b> · ассеты: <b>' + esc(assetsId) + '</b> · библиотек: <b>' + libCount + '</b> · mainClass: <code>' + esc(mainClass) + '</code></p>' +
       '<div class="card"><h2>Загрузки (официальный CDN Mojang)</h2>' +
       '<table><thead><tr><th>Файл</th><th>Размер</th><th>SHA-1</th><th></th></tr></thead><tbody>' +
-      order.filter(([k]) => dl[k]).map(([k, name]) => {
-        const f = dl[k]
-        return '<tr><td><b>' + name + '</b></td><td>' + fmtSize(f.size) + '</td>' +
+      order.filter(function (kv) { return dl[kv[0]] }).map(function (kv) {
+        const f = dl[kv[0]]
+        return '<tr><td><b>' + kv[1] + '</b></td><td>' + fmtSize(f.size) + '</td>' +
           '<td><span class="sha">' + esc(f.sha1) + '</span></td>' +
           '<td><a class="btn" style="padding:6px 14px;font-size:.8rem" href="' + esc(f.url) + '" rel="noopener">Скачать</a></td></tr>'
       }).join('') +
       '</tbody></table>' +
-      '<p class="note">Лаунчер обязан сверять SHA-1 после загрузки. Метаданные версии: <a href="' + esc(entry.url) + '" rel="noopener">исходный JSON Mojang</a>.</p></div>' +
+      '<p class="note">Маппинги = официальные «исходники»: по ним игра декомпилируется в читаемый код. Лаунчер обязан сверять SHA-1 после загрузки. Метаданные версии: <a href="' + esc(entry.url) + '" rel="noopener">исходный JSON Mojang</a>.</p></div>' +
+      '<div class="card" style="margin-top:14px"><h2>Ассеты и текстуры</h2>' +
+      '<table><tbody>' +
+      '<tr><td><b>Индекс ассетов</b></td><td>' + (d.assetIndex ? '<a href="' + esc(d.assetIndex.url) + '" rel="noopener">' + esc(d.assetIndex.id) + '</a> · ~' + fmtSize(d.assetIndex.totalSize) + ' всех файлов · SHA-1: <span class="sha">' + esc(d.assetIndex.sha1) + '</span>' : esc(assetsId)) + '</td></tr>' +
+      '<tr><td><b>Как качать текстуры</b></td><td>Каждый файл (текстуры, звуки, языки): <code>https://resources.download.minecraft.net/&lt;первые 2 символа sha1&gt;/&lt;sha1&gt;</code>. Хэши и пути — в индексе ассетов (ключи вида <code>minecraft/textures/block/stone.png</code>).</td></tr>' +
+      '</tbody></table></div>' +
+      '<div class="card" style="margin-top:14px"><h2>Исходники и загрузчики для этой версии</h2>' +
+      '<table><tbody>' +
+      '<tr><td><b>Исходный код игры</b></td><td>Mojang код не публикует — публикует маппинги (в таблице выше): по ним получается читаемый декомпилированный код. Открытые альтернативы: <a href="https://meta.fabricmc.net/v2/versions/yarn" rel="noopener">Yarn-маппинги Fabric</a>.</td></tr>' +
+      '<tr><td><b>Открытые загрузчики</b></td><td><a href="https://github.com/MinecraftForge/MinecraftForge" rel="noopener">Forge</a> · <a href="https://github.com/FabricMC/fabric" rel="noopener">Fabric</a> · <a href="https://github.com/neoforged/NeoForge" rel="noopener">NeoForge</a> · <a href="https://github.com/QuiltMC" rel="noopener">Quilt</a> — исходники на GitHub.</td></tr>' +
+      '<tr><td><b>Установить моды</b></td><td>' + (entry.type === 'release'
+        ? 'Живые списки и установщики — во вкладке <a href="#/loaders">Загрузчики</a> (Forge / Fabric / NeoForge / Quilt).'
+        : 'Снапшоты обычно поддерживают только свежие сборки Fabric/NeoForge — см. <a href="#/loaders">Загрузчики</a>.') + '</td></tr>' +
+      '</tbody></table></div>' +
       '<div class="card" style="margin-top:14px"><h2>Как это использует лаунчер</h2>' +
-      '<pre>1. Манифест:  GET ' + MANIFEST_URL + '\n2. Версия:    GET ' + esc(entry.url) + '\n3. Файлы:     downloads.client.url → проверить SHA-1 → запустить с java ' + esc(d.javaVersion ? d.javaVersion.majorVersion : '21') + '\n4. Библиотеки: libraries[*].downloads.artifact (правила rules для OS)</pre>' +
+      '<pre>1. Манифест:  GET ' + MANIFEST_URL + '\n2. Версия:    GET ' + esc(entry.url) + '\n3. Файлы:     downloads.client.url → проверить SHA-1 → запустить с java ' + esc(d.javaVersion ? d.javaVersion.majorVersion : '21') + '\n4. Библиотеки: libraries[*].downloads.artifact (правила rules для OS)\n5. Ассеты:    assetIndex.url → resources.download.minecraft.net/&lt;2 hex&gt;/&lt;sha1&gt;</pre>' +
       '<p class="note">Подробный разбор формата — в разделе <a href="#/api">API</a> и в <a href="/LAUNCHER-API.txt">/LAUNCHER-API.txt</a>.</p></div>'
+  }
+
+  async function loadersPage() {
+    setRoute('loaders')
+    app.innerHTML = '<h1>Загрузчики модов</h1><p class="sub"><span class="live-dot"></span>Живые данные с официальных метасерверов. Установщики — прямые ссылки на jar, для лаунчера тоже.</p><div id="ldr" class="grid2"></div>'
+    const box = document.getElementById('ldr')
+    function card(title, inner, gh) {
+      return '<div class="card"><h2>' + title + '</h2>' + inner + (gh ? '<p class="note">Открытый код: <a href="' + gh + '" rel="noopener">' + gh.replace('https://github.com/', '') + '</a></p>' : '') + '</div>'
+    }
+    const jobs = [
+      (async function () {
+        try {
+          const rs = await Promise.all([
+            fetch('https://meta.fabricmc.net/v2/versions/loader').then(function (r) { return r.json() }),
+            fetch('https://meta.fabricmc.net/v2/versions/installer').then(function (r) { return r.json() }),
+          ])
+          const ld = rs[0], ins = rs[1]
+          const stable = ld.find(function (x) { return x.stable }) || ld[0]
+          box.insertAdjacentHTML('beforeend', card('Fabric <span class="badge release">' + ld.length + ' сборок</span>',
+            '<div style="font-size:1.2rem;font-weight:700">' + esc(stable.version) + (stable.stable ? '' : ' <span class="badge snapshot">предсборка</span>') + '</div>' +
+            '<div class="meta">стабильная: ' + esc((ld.find(function (x) { return x.stable }) || {}).version || '—') + ' · установщик: ' + esc(ins[0].version) + '</div>' +
+            '<div style="margin-top:10px"><a class="btn" href="' + esc(ins[0].url) + '" rel="noopener">Скачать установщик jar</a></div>',
+            'https://github.com/FabricMC/fabric'))
+        } catch (e) { box.insertAdjacentHTML('beforeend', card('Fabric', '<p class="err">метасервер недоступен: ' + esc(e.message) + '</p>')) }
+      })(),
+      (async function () {
+        try {
+          const rs = await Promise.all([
+            fetch('https://meta.quiltmc.org/v3/versions/loader').then(function (r) { return r.json() }),
+            fetch('https://meta.quiltmc.org/v3/versions/installer').then(function (r) { return r.json() }),
+          ])
+          const ld = rs[0], ins = rs[1]
+          const iv = ins[0].version
+          const iurl = 'https://maven.quiltmc.org/repository/release/org/quiltmc/quilt-installer/' + iv + '/quilt-installer-' + iv + '.jar'
+          box.insertAdjacentHTML('beforeend', card('Quilt <span class="badge release">' + ld.length + ' сборок</span>',
+            '<div style="font-size:1.2rem;font-weight:700">' + esc(ld[0].version) + '</div>' +
+            '<div class="meta">установщик: ' + esc(iv) + '</div>' +
+            '<div style="margin-top:10px"><a class="btn" href="' + esc(iurl) + '" rel="noopener">Скачать установщик jar</a></div>',
+            'https://github.com/QuiltMC'))
+        } catch (e) { box.insertAdjacentHTML('beforeend', card('Quilt', '<p class="err">метасервер недоступен: ' + esc(e.message) + '</p>')) }
+      })(),
+      (async function () {
+        try {
+          const d = await fetch('https://maven.neoforged.net/api/maven/versions/releases/net/neoforged/neoforge').then(function (r) { return r.json() })
+          const all = d.versions || []
+          const byMc = {}
+          all.forEach(function (v) { const mc = v.split('.').slice(0, 2).join('.'); (byMc[mc] = byMc[mc] || []).push(v) })
+          const mcs = Object.keys(byMc).reverse().slice(0, 8)
+          const latest = all[all.length - 1]
+          const iurl = function (v) { return 'https://maven.neoforged.net/releases/net/neoforged/neoforge/' + v + '/neoforge-' + v + '-installer.jar' }
+          const prevMc = mcs[1] || mcs[0]
+          box.insertAdjacentHTML('beforeend', card('NeoForge <span class="badge release">' + all.length + ' сборок</span>',
+            '<div style="font-size:1.2rem;font-weight:700">' + esc(latest) + '</div>' +
+            '<div class="meta">' + mcs.map(function (mc) { return esc(mc) + ' → ' + esc(byMc[mc][byMc[mc].length - 1]) }).join(' · ') + '</div>' +
+            '<div style="margin-top:10px"><a class="btn" href="' + esc(iurl(latest)) + '" rel="noopener">Установщик последней</a> <a class="btn ghost" href="' + esc(iurl(byMc[prevMc][byMc[prevMc].length - 1])) + '" rel="noopener">MC ' + esc(prevMc) + '</a></div>',
+            'https://github.com/neoforged/NeoForge'))
+        } catch (e) { box.insertAdjacentHTML('beforeend', card('NeoForge', '<p class="err">maven недоступен: ' + esc(e.message) + '</p>')) }
+      })(),
+      (async function () {
+        try {
+          const d = await fetch('https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json').then(function (r) { return r.json() })
+          const pr = d.promos || {}
+          const mcs = Object.keys(pr).filter(function (k) { return k.endsWith('-latest') }).map(function (k) { return k.replace('-latest', '') }).reverse().slice(0, 8)
+          const top = mcs[0]
+          const topV = pr[top + '-latest']
+          const iurl = function (mc, fv) { return 'https://maven.minecraftforge.net/net/minecraftforge/forge/' + mc + '-' + fv + '/forge-' + mc + '-' + fv + '-installer.jar' }
+          box.insertAdjacentHTML('beforeend', card('Forge <span class="badge release">' + mcs.length + '+ версий MC</span>',
+            '<div style="font-size:1.2rem;font-weight:700">' + esc(top) + ' → ' + esc(topV) + '</div>' +
+            '<div class="meta">' + mcs.slice(0, 6).map(function (mc) { return esc(mc) + ' → ' + esc(pr[mc + '-latest']) + (pr[mc + '-recommended'] ? ' ⭐' : '') }).join(' · ') + '</div>' +
+            '<div style="margin-top:10px"><a class="btn" href="' + esc(iurl(top, topV)) + '" rel="noopener">Установщик последней</a> <a class="btn ghost" href="https://files.minecraftforge.net/net/minecraftforge/forge/" rel="noopener">Все версии ↗</a></div>',
+            'https://github.com/MinecraftForge/MinecraftForge'))
+        } catch (e) { box.insertAdjacentHTML('beforeend', card('Forge', '<p class="err">промо-файл недоступен: ' + esc(e.message) + '</p>')) }
+      })(),
+    ]
+    await Promise.allSettled(jobs)
+    if (!box.children.length) box.innerHTML = '<p class="err">Ни один метасервер не ответил. Проверьте интернет.</p>'
   }
 
   function apiPage() {
@@ -223,7 +312,7 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       '<h1>API лаунчера Cubenorixx</h1>' +
       '<p class="sub">Всё открытое, без ключей. Наш домен: <b>' + esc(base) + '</b>. Полная документация одним файлом: <a href="/LAUNCHER-API.txt">/LAUNCHER-API.txt</a></p>' +
       '<div class="card"><h2>Наши эндпоинты (статические JSON)</h2><table><thead><tr><th>Эндпоинт</th><th>Назначение</th></tr></thead><tbody>' +
-      '<tr><td><a href="/api/ok.txt">GET /api/ok</a></td><td>Проверка доступности API</td></tr>' +
+      '<tr><td><a href="/api/ok.txt">GET /api/ok.txt</a></td><td>Проверка доступности API</td></tr>' +
       '<tr><td><a href="/api/launcher-update.json">GET /api/launcher-update.json</a></td><td>Обновления лаунчера: версия, changelog, ссылки по ОС. <b>enabled=false</b>, пока установщика нет — лаунчер не должен предлагать загрузку</td></tr>' +
       '<tr><td><a href="/api/mc-versions.json">GET /api/mc-versions.json</a></td><td>Резервный список версий (если piston-meta недоступен): id, type, url, sha1, java_version</td></tr>' +
       '<tr><td><a href="/api/java-runtimes.json">GET /api/java-runtimes.json</a><br><a href="/api/modpacks.json">GET /api/modpacks.json</a><br><a href="/api/launcher-assets.json">GET /api/launcher-assets.json</a></td><td>Java-манифесты, сборки и ассеты лаунчера — черновики, заполняются по мере готовности</td></tr>' +
@@ -231,10 +320,16 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       '<div class="card" style="margin-top:14px"><h2>Живые версии — официальный манифест Mojang</h2>' +
       '<pre>GET <span class="kv">https://piston-meta.mojang.com/mc/game/version_manifest_v2.json</span>\n→ { latest: { release, snapshot }, versions: [{ id, type, url, time, releaseTime, sha1, complianceLevel }] }\n\nGET <span class="kv">{versions[i].url}</span>   // JSON конкретной версии\n→ { downloads: { client, server, client_mappings, server_mappings },\n    javaVersion: { majorVersion, component }, libraries: [...], assets, mainClass }</pre>' +
       '<p class="note">CORS открыт — можно запрашивать прямо со страницы. Файлы качаются с <b>piston-data.mojang.com</b> (ссылки в downloads.*.url). Обязательно сверяйте SHA-1. Не дёргайте манифест чаще раза в 60 секунд.</p></div>' +
+      '<div class="card" style="margin-top:14px"><h2>Загрузчики модов (живые метасерверы)</h2>' +
+      '<pre>GET <span class="kv">https://meta.fabricmc.net/v2/versions/loader</span>       // Fabric: [{version, stable, maven}]\nGET <span class="kv">https://meta.fabricmc.net/v2/versions/installer</span>    // URL установщика jar\nGET <span class="kv">https://meta.quiltmc.org/v3/versions/loader</span>        // Quilt (~300 сборок)\nGET <span class="kv">https://maven.neoforged.net/api/maven/versions/releases/net/neoforged/neoforge</span>  // {versions[]}, MC = первые 2 сегмента\nGET <span class="kv">https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json</span>  // {promos: {"1.21.4-latest", "1.21.4-recommended"}}\n\nУстановщики (прямые jar):\n  Fabric:   https://maven.fabricmc.net/net/fabricmc/fabric-installer/&lt;v&gt;/fabric-installer-&lt;v&gt;.jar\n  Quilt:    https://maven.quiltmc.org/repository/release/org/quiltmc/quilt-installer/&lt;v&gt;/quilt-installer-&lt;v&gt;.jar\n  NeoForge: https://maven.neoforged.net/releases/net/neoforged/neoforge/&lt;v&gt;/neoforge-&lt;v&gt;-installer.jar\n  Forge:    https://maven.minecraftforge.net/net/minecraftforge/forge/&lt;mc&gt;-&lt;v&gt;/forge-&lt;mc&gt;-&lt;v&gt;-installer.jar</pre>' +
+      '<p class="note">Кэшируйте ответы метасерверов (обновление раз в час достаточно). Jar-установщики не перепаковывать.</p></div>' +
+      '<div class="card" style="margin-top:14px"><h2>Ассеты, текстуры и исходники</h2>' +
+      '<pre>// Из JSON версии:\nassetIndex: { id, url, sha1, totalSize }   // индекс всех ресурсов\n→ каждый файл: <span class="kv">https://resources.download.minecraft.net/&lt;sha1[0:2]&gt;/&lt;sha1&gt;</span>\n  (текстуры, звуки, языки; ключи вида minecraft/textures/block/stone.png)\n\nИсходники: client_mappings / server_mappings (в downloads версии)\n  → официальные маппинги Mojang для декомпиляции читаемого кода.\n  Сам исходный код Mojang не публикует. Открытые маппинги: <span class="kv">https://meta.fabricmc.net/v2/versions/yarn</span>\n  Загрузчики открыты: github.com/MinecraftForge · FabricMC · neoforged · QuiltMC</pre>' +
+      '</div>' +
       '<div class="card" style="margin-top:14px"><h2>Правила Cubenorixx</h2>' +
       '<table><tbody>' +
       '<tr><td>Честные манифесты</td><td>enabled=false, пока бинарь не опубликован. Никаких фиктивных ссылок.</td></tr>' +
-      '<tr><td>User-Agent</td><td><code>Cubenorix/1.0 (+https://cubenorix.github.io)</code> или лаунчерная версия</td></tr>' +
+      '<tr><td>User-Agent</td><td><code>Cubenorix/1.0 (+https://cubenorix.github.io)</code> или версия лаунчера</td></tr>' +
       '<tr><td>Источник файлов</td><td>Только официальный CDN Mojang. Никаких перепаков.</td></tr>' +
       '<tr><td>Резервный путь</td><td>piston-meta недоступен → /api/mc-versions.json (автоматически, так работает и эта страница)</td></tr>' +
       '</tbody></table></div>'
@@ -242,9 +337,10 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
 
   async function router() {
     const h = nav()
+    if (h.indexOf('#/loaders') === 0) { await loadersPage(); return }
+    if (h.indexOf('#/api') === 0) { apiPage(); return }
     const m = h.match(/^#\/v\/?(.+)$/)
-    if (m) { await loadManifest().catch(() => {}); await versionPage(decodeURIComponent(m[1])); return }
-    if (h.startsWith('#/api')) { apiPage(); return }
+    if (m) { await loadManifest().catch(function () {}); await versionPage(decodeURIComponent(m[1])); return }
     try {
       await loadManifest()
       homePage()

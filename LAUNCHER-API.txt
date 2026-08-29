@@ -1,6 +1,6 @@
 ════════════════════════════════════════════════════════════════════
   CUBENORIXX — ДОКУМЕНТАЦИЯ ДЛЯ РАЗРАБОТЧИКА MINECRAFT-ЛАУНЧЕРА
-  Версия документа: 2.0 · 28.08.2026 · поддерживается командой Cubenorixx
+  Версия документа: 3.0 · 28.08.2026 · поддерживается командой Cubenorixx
 ════════════════════════════════════════════════════════════════════
 
 1. ДОМЕНЫ
@@ -116,7 +116,60 @@
   GET /api/featured-mods.json → список slug рекомендуемых модов (Modrinth)
   GET /api/launcher-assets.json → ассеты UI лаунчера (черновик)
 
-5. КАК ЗАПУСКАТЬ ВЕРСИЮ (стандартный процесс)
+5. ЗАГРУЗЧИКИ МОДОВ (живые метасерверы, проверено 28.08.2026)
+──────────────────────────────────────────────────────────────
+  FABRIC (https://fabricmc.net)
+    GET https://meta.fabricmc.net/v2/versions/loader
+        → [ { "version": "0.19.5", "stable": true|false, "maven", "separator" }, ... ] (~250)
+    GET https://meta.fabricmc.net/v2/versions/installer
+        → [ { "version": "1.1.2", "url": "https://maven.fabricmc.net/.../fabric-installer-1.1.2.jar" } ]
+    Установщик: url прямо из ответа. Поддержка: все релизы и снапшоты.
+    Открытый код: https://github.com/FabricMC/fabric
+
+  QUILT (https://quiltmc.org)
+    GET https://meta.quiltmc.org/v3/versions/loader
+        → [ { "version": "0.30.1", ... } ] (~300)
+    GET https://meta.quiltmc.org/v3/versions/installer → { "version": "0.15.1" }
+    Установщик: https://maven.quiltmc.org/repository/release/org/quiltmc/quilt-installer/<v>/quilt-installer-<v>.jar
+    Открытый код: https://github.com/QuiltMC
+
+  NEOFORGE (https://neoforged.net)
+    GET https://maven.neoforged.net/api/maven/versions/releases/net/neoforged/neoforge
+        → { "isSnapshot": false, "versions": [ "26.2.0.72", ... ] }  (~1700)
+        Версия = <MC>.<MC-минор>.<патч> (первые 2 сегмента = версия Minecraft).
+    Установщик: https://maven.neoforged.net/releases/net/neoforged/neoforge/<v>/neoforge-<v>-installer.jar
+    Открытый код: https://github.com/neoforged/NeoForge
+
+  FORGE (https://files.minecraftforge.net)
+    GET https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json
+        → { "promos": { "1.21.4-latest": "54.1.18", "1.21.4-recommended": "54.1.14", ... } }
+        (<mc>-latest = свежая, <mc>-recommended = стабильная, ⭐)
+    Установщик: https://maven.minecraftforge.net/net/minecraftforge/forge/<mc>-<v>/forge-<mc>-<v>-installer.jar
+    Открытый код: https://github.com/MinecraftForge/MinecraftForge
+
+  Правила:jar установщиков НЕ перепаковывать; лаунчер запускает их
+  с --installClient <папка> или парсит профили сам. Кэшируйте ответы
+  метасерверов (достаточно обновлять раз в час).
+
+6. АССЕТЫ, ТЕКСТУРЫ И ИСХОДНИКИ
+─────────────────────────────────
+  Ассеты (текстуры, звуки, языки):
+    В JSON версии: "assetIndex": { "id", "url", "sha1", "totalSize" }
+    1) Скачать индекс по url (JSON: { objects: { "minecraft/textures/...": { hash, size } } })
+    2) Каждый файл: https://resources.download.minecraft.net/<sha1[0:2]>/<sha1>
+       (первые 2 символа hex-хэша — подпапка). Сверять SHA-1, кэшировать по хэшу.
+  Исходники игры:
+    Официального исходного кода Mojang НЕ публикует. Публикуются обфускационные
+    маппинги: downloads.client_mappings и downloads.server_mappings (в JSON версии).
+    По маппингам (ProGuard txt) код декомпилируется в читаемый вид.
+  Исходный код загрузчиков (открытый):
+    Forge — github.com/MinecraftForge/MinecraftForge
+    Fabric — github.com/FabricMC/fabric (+ FabricMC/fabric-loader, fabric-api)
+    NeoForge — github.com/neoforged/NeoForge
+    Quilt — github.com/QuiltMC
+  Yarn-маппинги (альтернатива, открытые): https://meta.fabricmc.net/v2/versions/yarn
+
+7. КАК ЗАПУСКАТЬ ВЕРСИЮ (стандартный процесс)
 ──────────────────────────────────────────────
   1) Манифест → найти версию → взять её url.
   2) Скачать JSON версии; распарсить downloads/libraries/assetIndex.
@@ -133,7 +186,7 @@
        --assetsDir <assets> --assetIndex <assetsId> --accessToken 0
      (точные arguments mainClass/arguments из JSON версии)
 
-6. ПРАВИЛА ПРОЕКТА (важно!)
+8. ПРАВИЛА ПРОЕКТА (важно!)
 ────────────────────────────
   • Не врать в манифестах: enabled=false, пока файлов реально нет.
     Установщик/лаунчер не должен показывать кнопки загрузки при enabled=false.
@@ -144,7 +197,7 @@
   • При переезде домена: всё относительное; меняется только origin
     (у нас в сборке это env CUBENORIXX_ORIGIN; для лаунчера — константа).
 
-7. ПЛАН ДАЛЬНЕЙШЕГО ЗАПУСКА ЛАУНЧЕРА
+9. ПЛАН ДАЛЬНЕЙШЕГО ЗАПУСКА ЛАУНЧЕРА
 ─────────────────────────────────────
   Шаг 1. Готов ядро лаунчера (скачивание по процессу из раздела 5,
          проверка SHA-1, офлайн-режим).
@@ -155,7 +208,7 @@
   Шаг 5. Сборки: /api/modpacks.json; серверные роутоы — после деплоя
          Cloudflare Worker (тот же zip Cubenorixx-deploy.zip).
 
-8. КОНТАКТЫ
+10. КОНТАКТЫ
 ────────────
   Канал: https://t.me/Cubenorix  ·  Поддержка: @Cubenorixsupportbot
   Вопросы по этому документу — в поддержку, отвечаем быстро.
