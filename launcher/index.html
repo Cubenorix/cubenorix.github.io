@@ -229,6 +229,18 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       '<p class="note">Подробный разбор формата — в разделе <a href="#/api">API</a> и в <a href="/LAUNCHER-API.txt">/LAUNCHER-API.txt</a>.</p></div>'
   }
 
+  async function forgeData() {
+    try {
+      const r = await fetch('https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json', { headers: { Accept: 'application/json' } })
+      if (r.ok) { const j = await r.json(); if (j.promos && Object.keys(j.promos).length) return { promos: j.promos, live: true, at: null } }
+    } catch (e) { /* нет CORS — берём наш снимок */ }
+    const r2 = await fetch('/api/forge-promos.json')
+    if (!r2.ok) throw new Error('нет данных (и живых, и в резервной копии)')
+    const j2 = await r2.json()
+    if (!j2.promos || !Object.keys(j2.promos).length) throw new Error('резервная копия пуста')
+    return { promos: j2.promos, live: false, at: j2.generated_at }
+  }
+
   async function loadersPage() {
     setRoute('loaders')
     app.innerHTML = '<h1>Загрузчики модов</h1><p class="sub"><span class="live-dot"></span>Живые данные с официальных метасерверов. Установщики — прямые ссылки на jar, для лаунчера тоже.</p><div id="ldr" class="grid2"></div>'
@@ -287,18 +299,20 @@ footer.bot { margin-top: 42px; padding-top: 18px; border-top: 1px solid rgba(255
       })(),
       (async function () {
         try {
-          const d = await fetch('https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json').then(function (r) { return r.json() })
-          const pr = d.promos || {}
+          const fd = await forgeData()
+          const pr = fd.promos || {}
           const mcs = Object.keys(pr).filter(function (k) { return k.endsWith('-latest') }).map(function (k) { return k.replace('-latest', '') }).reverse().slice(0, 8)
           const top = mcs[0]
           const topV = pr[top + '-latest']
           const iurl = function (mc, fv) { return 'https://maven.minecraftforge.net/net/minecraftforge/forge/' + mc + '-' + fv + '/forge-' + mc + '-' + fv + '-installer.jar' }
+          const srcNote = fd.live ? 'живой файл files.minecraftforge.net' : 'резервная копия Cubenorixx от ' + fmtDate(fd.at) + ' (у Forge нет CORS для браузера)'
           box.insertAdjacentHTML('beforeend', card('Forge <span class="badge release">' + mcs.length + '+ версий MC</span>',
             '<div style="font-size:1.2rem;font-weight:700">' + esc(top) + ' → ' + esc(topV) + '</div>' +
             '<div class="meta">' + mcs.slice(0, 6).map(function (mc) { return esc(mc) + ' → ' + esc(pr[mc + '-latest']) + (pr[mc + '-recommended'] ? ' ⭐' : '') }).join(' · ') + '</div>' +
+            '<div class="note">Источник: ' + srcNote + '</div>' +
             '<div style="margin-top:10px"><a class="btn" href="' + esc(iurl(top, topV)) + '" rel="noopener">Установщик последней</a> <a class="btn ghost" href="https://files.minecraftforge.net/net/minecraftforge/forge/" rel="noopener">Все версии ↗</a></div>',
             'https://github.com/MinecraftForge/MinecraftForge'))
-        } catch (e) { box.insertAdjacentHTML('beforeend', card('Forge', '<p class="err">промо-файл недоступен: ' + esc(e.message) + '</p>')) }
+        } catch (e) { box.insertAdjacentHTML('beforeend', card('Forge', '<p class="err">данные Forge недоступны: ' + esc(e.message) + '</p>')) }
       })(),
     ]
     await Promise.allSettled(jobs)
