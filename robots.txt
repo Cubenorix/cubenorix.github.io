@@ -1,3 +1,5 @@
-# Cubenorix в закрытом режиме: доступ только по прямой ссылке.
+# Сайт закрыт от поисковых систем: доступ только по прямой ссылке.
 User-agent: *
 Disallow: /
+
+Sitemap: https://cubenorix.github.io/sitemap.xml
