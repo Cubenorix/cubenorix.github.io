@@ -1,5 +1,4 @@
-# Сайт закрыт от поисковых систем: доступ только по прямой ссылке.
 User-agent: *
-Disallow: /
+Allow: /
 
 Sitemap: https://cubenorix.github.io/sitemap.xml
