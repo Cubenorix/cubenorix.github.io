@@ -14,5 +14,7 @@
     "signature_algorithm": "ed25519",
     "public_key_id": null
   },
-  "support_url": "https://t.me/Cubenorixsupportbot"
+  "support_url": "https://t.me/Cubenorixsupportbot",
+  "sha256_windows": null,
+  "min_launcher_version": null
 }

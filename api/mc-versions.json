@@ -1,237 +1,372 @@
 {
-  "schema_version": 1,
-  "source": "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json",
-  "generated_at": "2026-08-23T18:04:29.692364Z",
-  "latest": {
-    "release": "26.2",
-    "snapshot": "26.3-snapshot-9"
+ "schema_version": 1,
+ "source": "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json",
+ "generated_at": "2026-09-14T17:29:32.529713+00:00",
+ "latest": {
+  "release": "26.2",
+  "snapshot": "26.3-rc-3"
+ },
+ "versions": [
+  {
+   "id": "26.3-rc-3",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/151dc3480326eafcd01deb7e53fdd5ee381ee19d/26.3-rc-3.json",
+   "sha1": "151dc3480326eafcd01deb7e53fdd5ee381ee19d",
+   "release_time": "2026-09-14T12:58:38+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
   },
-  "versions": [
-    {
-      "id": "26.2",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/c75d82e7fa6eca5a043dab0c6cf77cb8317644f4/26.2.json",
-      "sha1": "c75d82e7fa6eca5a043dab0c6cf77cb8317644f4",
-      "release_time": "2026-06-16T12:03:33+00:00",
-      "java_version": 25,
-      "java_component": "java-runtime-epsilon"
-    },
-    {
-      "id": "26.1.2",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/b6eceb24d9494a52f3a75073fb13c6ebe9909296/26.1.2.json",
-      "sha1": "b6eceb24d9494a52f3a75073fb13c6ebe9909296",
-      "release_time": "2026-04-09T10:12:23+00:00",
-      "java_version": 25,
-      "java_component": "java-runtime-epsilon"
-    },
-    {
-      "id": "26.1.1",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/2e684e21c6a6e7b1d297113e9190c42d85e482e6/26.1.1.json",
-      "sha1": "2e684e21c6a6e7b1d297113e9190c42d85e482e6",
-      "release_time": "2026-04-01T09:06:36+00:00",
-      "java_version": 25,
-      "java_component": "java-runtime-epsilon"
-    },
-    {
-      "id": "26.1",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/1f98467962f1878c2a839845d0f6108c40682e76/26.1.json",
-      "sha1": "1f98467962f1878c2a839845d0f6108c40682e76",
-      "release_time": "2026-03-24T12:11:04+00:00",
-      "java_version": 25,
-      "java_component": "java-runtime-epsilon"
-    },
-    {
-      "id": "1.21.11",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/e39d9c8db0d398a988488e6d799db6f09987f98a/1.21.11.json",
-      "sha1": "e39d9c8db0d398a988488e6d799db6f09987f98a",
-      "release_time": "2025-12-09T12:23:30+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.10",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/cf316bbecd10861487e6bde2b7d3cf1b60639a92/1.21.10.json",
-      "sha1": "cf316bbecd10861487e6bde2b7d3cf1b60639a92",
-      "release_time": "2025-10-07T09:17:23+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.9",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/1f5029dd360b8372e67753297ea800135f8ff4be/1.21.9.json",
-      "sha1": "1f5029dd360b8372e67753297ea800135f8ff4be",
-      "release_time": "2025-09-30T11:58:43+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.8",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/79e36d4b0cb8a0c0d149e2986f74d9b464655c9b/1.21.8.json",
-      "sha1": "79e36d4b0cb8a0c0d149e2986f74d9b464655c9b",
-      "release_time": "2025-07-17T12:04:02+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.7",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/9fe301f4f90b4fbe6b2bbfaab3a9a3f6ef71020d/1.21.7.json",
-      "sha1": "9fe301f4f90b4fbe6b2bbfaab3a9a3f6ef71020d",
-      "release_time": "2025-06-30T09:32:16+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.6",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/a77ea2f86c070c4d1a0acc42567ce7bec76f019f/1.21.6.json",
-      "sha1": "a77ea2f86c070c4d1a0acc42567ce7bec76f019f",
-      "release_time": "2025-06-17T11:10:28+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.5",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/5fd126ffe444d6f323157903d91d3a82471c84e2/1.21.5.json",
-      "sha1": "5fd126ffe444d6f323157903d91d3a82471c84e2",
-      "release_time": "2025-03-25T12:14:58+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.4",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/7a6a540b8b43659d4959beec59b8b1e79fec81c6/1.21.4.json",
-      "sha1": "7a6a540b8b43659d4959beec59b8b1e79fec81c6",
-      "release_time": "2024-12-03T10:12:57+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.3",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/f70e2facfbcdee0de42cfbffc72cc1fae811ddc0/1.21.3.json",
-      "sha1": "f70e2facfbcdee0de42cfbffc72cc1fae811ddc0",
-      "release_time": "2024-10-23T12:28:15+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.2",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/cb7c855086eeb64d22c7940dd9f0a3c06f9af6a7/1.21.2.json",
-      "sha1": "cb7c855086eeb64d22c7940dd9f0a3c06f9af6a7",
-      "release_time": "2024-10-22T09:58:55+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21.1",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/9d4b0811c18ea0e0968693b971233c49d89b9ced/1.21.1.json",
-      "sha1": "9d4b0811c18ea0e0968693b971233c49d89b9ced",
-      "release_time": "2024-08-08T12:24:45+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.21",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/122160796575e77f74823e7ed27affbaa7b64afc/1.21.json",
-      "sha1": "122160796575e77f74823e7ed27affbaa7b64afc",
-      "release_time": "2024-06-13T08:24:03+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "26.3-snapshot-9",
-      "type": "snapshot",
-      "url": "https://piston-meta.mojang.com/v1/packages/cc88c84a24aa6e73ec4b0c7b2237a36056b23563/26.3-snapshot-9.json",
-      "sha1": "cc88c84a24aa6e73ec4b0c7b2237a36056b23563",
-      "release_time": "2026-08-17T11:46:16+00:00",
-      "java_version": 25,
-      "java_component": "java-runtime-epsilon"
-    },
-    {
-      "id": "1.20.6",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/c324105e8deb7a1a4adacb5ac1567940ef41c4e3/1.20.6.json",
-      "sha1": "c324105e8deb7a1a4adacb5ac1567940ef41c4e3",
-      "release_time": "2024-04-29T12:40:45+00:00",
-      "java_version": 21,
-      "java_component": "java-runtime-delta"
-    },
-    {
-      "id": "1.20.4",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/779ab2f075fd7f71ef68c3e4f959eb600a48f989/1.20.4.json",
-      "sha1": "779ab2f075fd7f71ef68c3e4f959eb600a48f989",
-      "release_time": "2023-12-07T12:56:20+00:00",
-      "java_version": 17,
-      "java_component": "java-runtime-gamma"
-    },
-    {
-      "id": "1.20.1",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/e846101ba6cf0b548e8b71624c7351b6458c5349/1.20.1.json",
-      "sha1": "e846101ba6cf0b548e8b71624c7351b6458c5349",
-      "release_time": "2023-06-12T13:25:51+00:00",
-      "java_version": 17,
-      "java_component": "java-runtime-gamma"
-    },
-    {
-      "id": "1.19.2",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/ed548106acf3ac7e8205a6ee8fd2710facfa164f/1.19.2.json",
-      "sha1": "ed548106acf3ac7e8205a6ee8fd2710facfa164f",
-      "release_time": "2022-08-05T11:57:05+00:00",
-      "java_version": 17,
-      "java_component": "java-runtime-gamma"
-    },
-    {
-      "id": "1.18.2",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/334b33fcba3c9be4b7514624c965256535bd7eba/1.18.2.json",
-      "sha1": "334b33fcba3c9be4b7514624c965256535bd7eba",
-      "release_time": "2022-02-28T10:42:45+00:00",
-      "java_version": 17,
-      "java_component": "java-runtime-beta"
-    },
-    {
-      "id": "1.16.5",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/fba9f7833e858a1257d810d21a3a9e3c967f9077/1.16.5.json",
-      "sha1": "fba9f7833e858a1257d810d21a3a9e3c967f9077",
-      "release_time": "2021-01-14T16:05:32+00:00",
-      "java_version": 8,
-      "java_component": "jre-legacy"
-    },
-    {
-      "id": "1.12.2",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/832d95b9f40699d4961394dcf6cf549e65f15dc5/1.12.2.json",
-      "sha1": "832d95b9f40699d4961394dcf6cf549e65f15dc5",
-      "release_time": "2017-09-18T08:39:46+00:00",
-      "java_version": 8,
-      "java_component": "jre-legacy"
-    },
-    {
-      "id": "1.8.9",
-      "type": "release",
-      "url": "https://piston-meta.mojang.com/v1/packages/d546f1707a3f2b7d034eece5ea2e311eda875787/1.8.9.json",
-      "sha1": "d546f1707a3f2b7d034eece5ea2e311eda875787",
-      "release_time": "2015-12-03T09:24:39+00:00",
-      "java_version": 8,
-      "java_component": "jre-legacy"
-    }
-  ],
-  "notice": "Метаданные получены из официального манифеста Mojang. Лаунчер должен проверять SHA-1 файлов из version JSON."
+  {
+   "id": "26.3-rc-2",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/129fd963d9771ac9b1f14878cc2966e66a5faa05/26.3-rc-2.json",
+   "sha1": "129fd963d9771ac9b1f14878cc2966e66a5faa05",
+   "release_time": "2026-09-11T10:34:40+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-rc-1",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/0a5e502e33d8062d333ba480cd7f132861b448c9/26.3-rc-1.json",
+   "sha1": "0a5e502e33d8062d333ba480cd7f132861b448c9",
+   "release_time": "2026-09-10T11:28:25+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-pre-3",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/c53c41579fd80a2759e47cd49fbbf912d3c716f4/26.3-pre-3.json",
+   "sha1": "c53c41579fd80a2759e47cd49fbbf912d3c716f4",
+   "release_time": "2026-09-08T13:04:44+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-pre-2",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/41403e3b576a6c62e4f1f4cb5290cb90d0cc5fde/26.3-pre-2.json",
+   "sha1": "41403e3b576a6c62e4f1f4cb5290cb90d0cc5fde",
+   "release_time": "2026-09-04T11:54:52+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-pre-1",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/f1913ca5eeac1e09887b55aaef8117949eb33594/26.3-pre-1.json",
+   "sha1": "f1913ca5eeac1e09887b55aaef8117949eb33594",
+   "release_time": "2026-09-01T11:29:01+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-10",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/3a372472283f4cc9e064e5e8c62eeb0fdf70e4c4/26.3-snapshot-10.json",
+   "sha1": "3a372472283f4cc9e064e5e8c62eeb0fdf70e4c4",
+   "release_time": "2026-08-25T12:53:43+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-9",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/c0fd4028978a94ff5f4cebe94a569e7d0db16fb0/26.3-snapshot-9.json",
+   "sha1": "c0fd4028978a94ff5f4cebe94a569e7d0db16fb0",
+   "release_time": "2026-08-17T11:46:16+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-8",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/52c633508dcdc562615ce5456f87b461c27a855b/26.3-snapshot-8.json",
+   "sha1": "52c633508dcdc562615ce5456f87b461c27a855b",
+   "release_time": "2026-08-12T09:39:37+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-7",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/2879c2b4248a489a04970db3f3121337aec65391/26.3-snapshot-7.json",
+   "sha1": "2879c2b4248a489a04970db3f3121337aec65391",
+   "release_time": "2026-08-04T11:49:07+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-6",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/f9633e8aabc2996925a370753f78eb52e7148011/26.3-snapshot-6.json",
+   "sha1": "f9633e8aabc2996925a370753f78eb52e7148011",
+   "release_time": "2026-07-28T12:25:51+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-5",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/6074a618adb7c9af9fc269222aae7a9826777206/26.3-snapshot-5.json",
+   "sha1": "6074a618adb7c9af9fc269222aae7a9826777206",
+   "release_time": "2026-07-21T11:45:42+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-4",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/0da47359ce5503898a98cbb5627ccaf0294b4754/26.3-snapshot-4.json",
+   "sha1": "0da47359ce5503898a98cbb5627ccaf0294b4754",
+   "release_time": "2026-07-16T13:59:30+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-3",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/825c2044d50938566da06a9c0c4ac893dcc681b7/26.3-snapshot-3.json",
+   "sha1": "825c2044d50938566da06a9c0c4ac893dcc681b7",
+   "release_time": "2026-07-07T12:03:01+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-2",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/b934b82c055cc409df616527d299503886f0aaea/26.3-snapshot-2.json",
+   "sha1": "b934b82c055cc409df616527d299503886f0aaea",
+   "release_time": "2026-06-30T12:45:43+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.3-snapshot-1",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/2b4aaea358b0b1cff577f17631f0a6c49ea7603e/26.3-snapshot-1.json",
+   "sha1": "2b4aaea358b0b1cff577f17631f0a6c49ea7603e",
+   "release_time": "2026-06-23T11:57:02+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2",
+   "type": "release",
+   "url": "https://piston-meta.mojang.com/v1/packages/1595470509933451a460bd157624e6e4f083890b/26.2.json",
+   "sha1": "1595470509933451a460bd157624e6e4f083890b",
+   "release_time": "2026-06-16T12:03:33+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-rc-2",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/a75cfbb00a0b0fee75b933d02f0c6b8f6e78106a/26.2-rc-2.json",
+   "sha1": "a75cfbb00a0b0fee75b933d02f0c6b8f6e78106a",
+   "release_time": "2026-06-12T11:32:28+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-rc-1",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/c2ecb8457f98ee6b611e19f5edfe7ccf873cb090/26.2-rc-1.json",
+   "sha1": "c2ecb8457f98ee6b611e19f5edfe7ccf873cb090",
+   "release_time": "2026-06-11T11:57:50+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-pre-6",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/18c6456063b36ee2de9085bab3f01f0be2e41ce3/26.2-pre-6.json",
+   "sha1": "18c6456063b36ee2de9085bab3f01f0be2e41ce3",
+   "release_time": "2026-06-10T12:20:24+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-pre-5",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/672014e29a6558858d7dc9e653bda4e5ed72786a/26.2-pre-5.json",
+   "sha1": "672014e29a6558858d7dc9e653bda4e5ed72786a",
+   "release_time": "2026-06-08T13:04:25+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-pre-4",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/26d9edf9e7a15c814a050fcb6f0f8b03875eb133/26.2-pre-4.json",
+   "sha1": "26d9edf9e7a15c814a050fcb6f0f8b03875eb133",
+   "release_time": "2026-06-04T12:38:47+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-pre-3",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/a41b6e4ebf84b9216f0db0894b07df759e1fff31/26.2-pre-3.json",
+   "sha1": "a41b6e4ebf84b9216f0db0894b07df759e1fff31",
+   "release_time": "2026-06-02T11:48:29+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-pre-2",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/10e25c5c267792026070025333fcfd642f840c28/26.2-pre-2.json",
+   "sha1": "10e25c5c267792026070025333fcfd642f840c28",
+   "release_time": "2026-05-28T12:45:31+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-pre-1",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/b9dbdb0ca6e2265635f5188b75fbb0780e99dfaf/26.2-pre-1.json",
+   "sha1": "b9dbdb0ca6e2265635f5188b75fbb0780e99dfaf",
+   "release_time": "2026-05-26T13:48:31+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-snapshot-8",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/ec89dfea434bf99d60273932efe89878fb9cf19d/26.2-snapshot-8.json",
+   "sha1": "ec89dfea434bf99d60273932efe89878fb9cf19d",
+   "release_time": "2026-05-19T15:19:20+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-snapshot-7",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/e8d19f74c23cb436ec2587042160b8ffd73af307/26.2-snapshot-7.json",
+   "sha1": "e8d19f74c23cb436ec2587042160b8ffd73af307",
+   "release_time": "2026-05-12T12:24:28+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-snapshot-6",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/2c5b07fe90777fccc90fd18137ac50ccfa0b7e52/26.2-snapshot-6.json",
+   "sha1": "2c5b07fe90777fccc90fd18137ac50ccfa0b7e52",
+   "release_time": "2026-05-05T12:50:56+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-snapshot-5",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/09f6006c65d45aa392debf8a948cba3e0ea4529f/26.2-snapshot-5.json",
+   "sha1": "09f6006c65d45aa392debf8a948cba3e0ea4529f",
+   "release_time": "2026-04-28T12:41:41+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-snapshot-4",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/62bfd68610068a67e3044f05a081e96f68dda9f1/26.2-snapshot-4.json",
+   "sha1": "62bfd68610068a67e3044f05a081e96f68dda9f1",
+   "release_time": "2026-04-21T12:05:40+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-snapshot-3",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/48c698674148c4079f52d8d49debb6fb6a8d1d1a/26.2-snapshot-3.json",
+   "sha1": "48c698674148c4079f52d8d49debb6fb6a8d1d1a",
+   "release_time": "2026-04-14T11:30:34+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-snapshot-2",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/09f2a086765e06d5f95e7d6cafc4e2de35a342b4/26.2-snapshot-2.json",
+   "sha1": "09f2a086765e06d5f95e7d6cafc4e2de35a342b4",
+   "release_time": "2026-04-09T12:26:35+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.1.2",
+   "type": "release",
+   "url": "https://piston-meta.mojang.com/v1/packages/462c314fb9b804694e1ad0ecfa8d523e27a55fb4/26.1.2.json",
+   "sha1": "462c314fb9b804694e1ad0ecfa8d523e27a55fb4",
+   "release_time": "2026-04-09T10:12:23+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.1.2-rc-1",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/e2f2499d66d96c993b0d2171eab631d2497d1015/26.1.2-rc-1.json",
+   "sha1": "e2f2499d66d96c993b0d2171eab631d2497d1015",
+   "release_time": "2026-04-08T12:47:45+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.2-snapshot-1",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/52f82268b1a438ab1368f72b74f6fd89b5295696/26.2-snapshot-1.json",
+   "sha1": "52f82268b1a438ab1368f72b74f6fd89b5295696",
+   "release_time": "2026-04-07T11:52:43+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26w14a",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/efcb41bc54f785571e6f952ab21e74adfd9ae624/26w14a.json",
+   "sha1": "efcb41bc54f785571e6f952ab21e74adfd9ae624",
+   "release_time": "2026-04-01T12:13:30+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.1.1",
+   "type": "release",
+   "url": "https://piston-meta.mojang.com/v1/packages/3be2c55b3ca8a862459d415272c46439aa1f8d9e/26.1.1.json",
+   "sha1": "3be2c55b3ca8a862459d415272c46439aa1f8d9e",
+   "release_time": "2026-04-01T09:06:36+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.1.1-rc-1",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/51a1ca08eec37a9b8ad24a384f892594f5f05375/26.1.1-rc-1.json",
+   "sha1": "51a1ca08eec37a9b8ad24a384f892594f5f05375",
+   "release_time": "2026-03-31T10:07:21+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.1",
+   "type": "release",
+   "url": "https://piston-meta.mojang.com/v1/packages/dd1850305c8f0b9f1e774e54712c3f69c87d3e1e/26.1.json",
+   "sha1": "dd1850305c8f0b9f1e774e54712c3f69c87d3e1e",
+   "release_time": "2026-03-24T12:11:04+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  },
+  {
+   "id": "26.1-rc-3",
+   "type": "snapshot",
+   "url": "https://piston-meta.mojang.com/v1/packages/1921da922744ac6a2cd204034d637f50a9244445/26.1-rc-3.json",
+   "sha1": "1921da922744ac6a2cd204034d637f50a9244445",
+   "release_time": "2026-03-23T11:11:54+00:00",
+   "java_version": 25,
+   "java_component": "java-runtime-epsilon"
+  }
+ ],
+ "note": "Резервный список: лаунчер сначала читает живой манифест Mojang, этот файл — только при его недоступности."
 }
