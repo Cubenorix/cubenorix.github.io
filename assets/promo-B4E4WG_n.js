@@ -25,7 +25,7 @@ var e=e=>String(e||``).replace(/&/g,`&amp;`).replace(/</g,`&lt;`).replace(/>/g,`
 <a class="banner" style="--acc: 255 122 0; --acc-soft: 255 190 120" href="${e(`https://cubenorix.github.io/#/project/`+encodeURIComponent(String(t.title||``).toLowerCase().replace(/[^a-z0-9]+/g,`-`)))}" target="_blank" rel="noopener">
   <span class="beam"></span>
   <span class="inner">
-    <svg class="cube" viewBox="0 0 100 117"><g fill="none" stroke="#FF7A00" stroke-width="6.4" stroke-linejoin="round" stroke-linecap="round"><path d="M49.9 3.4 L3.3 29.3 L3.3 88.2 L49.9 113.8 L96.6 88.2 L96.6 29.3 Z"/><path d="M6.7 32.4 C 33 33.6, 45.5 51.5, 76.4 98.9"/><path d="M93.2 32.4 C 67 33.6, 54.5 51.5, 23.5 98.9"/></g></svg>
+    <svg class="cube" viewBox="0 0 100 117"><g fill="none" stroke="#FF6B00" stroke-width="6.4" stroke-linejoin="round" stroke-linecap="round"><path d="M49.9 3.4 L3.3 29.3 L3.3 88.2 L49.9 113.8 L96.6 88.2 L96.6 29.3 Z"/><path d="M6.7 32.4 C 33 33.6, 45.5 51.5, 76.4 98.9"/><path d="M93.2 32.4 C 67 33.6, 54.5 51.5, 23.5 98.9"/></g></svg>
     <span style="display:block; min-width:0">
       <h1>${n}</h1>
       <span class="desc" style="display:block">${r}</span>
